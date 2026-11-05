@@ -73,7 +73,7 @@ Solo le enviamos el Boletín de novedades y promociones de Lebrel si usted lo co
 
 Peluquería Canina Lebrel SpA comunica datos personales a las siguientes categorías de destinatarios:
 
-**Clínica Veterinaria Los Aromos SpA (RUT 76.987.654-5, Chile):** solo cuando usted reserva guardería, confirma que las vacunas de su perro estén al día. Recibe solo lo necesario para esa confirmación: su nombre, RUT y teléfono; el nombre y la raza de su perro; la fecha de la reserva, si las vacunas están al día y el identificador interno de la reserva. **No recibe su correo electrónico ni su dirección.** Las reservas de baño o de baño y corte no se le comunican. Si usted solicita la supresión de sus datos, le pedimos a la veterinaria que elimine también la confirmación que le enviamos, antes de borrar la reserva nosotros.
+**Clínica Veterinaria Los Aromos SpA (RUT 76.987.654-5, Chile):** cuando usted reserva guardería, la clínica confirma que las vacunas de su perro estén al día; solo en ese caso le enviamos la reserva. Recibe solo lo necesario para esa confirmación: su nombre, RUT y teléfono; el nombre y la raza de su perro; la fecha de la reserva, si las vacunas están al día y el identificador interno de la reserva. **No recibe su correo electrónico ni su dirección.** Las reservas de baño o de baño y corte no se le comunican. Si usted solicita la supresión de sus datos, le pedimos a la veterinaria que elimine también la confirmación que le enviamos, antes de borrar la reserva nosotros.
 
 **Proveedores de servicios (encargados):** empresas que alojan y operan nuestro sitio y nuestra base de datos (Cloudflare) y que gestionan el banner de cookies, el registro de consentimientos y el Centro de Privacidad (Privai). Actúan por cuenta de Lebrel, bajo contrato y solo para prestar el servicio contratado. Quiénes son, en qué país están y qué datos reciben se detalla en la Sección 5. Privai no accede a los datos de las Reservas de hora salvo para entregarle a usted el resultado de una solicitud de acceso que haya presentado.
 
@@ -181,7 +181,7 @@ Implementamos medidas técnicas y organizativas apropiadas al riesgo, conforme a
 
 **Minimización:** Pedimos solo los datos que usa el servicio, y la dirección solo cuando pide retiro a domicilio. A la veterinaria le enviamos solo las reservas de guardería y solo lo necesario para confirmar las vacunas, sin su correo ni su dirección. La analítica no registra su nombre, correo ni dirección IP, y los registros técnicos usan identificadores internos en vez de sus datos.
 
-**Integridad en los derechos:** Una supresión solo se ejecuta cuando la veterinaria confirma que eliminó su copia; si no, no se borra nada parcialmente y el caso queda para revisión. El Centro de Privacidad verifica su identidad antes de entregar o borrar datos.
+**Integridad en los derechos:** Una supresión solo se ejecuta cuando la veterinaria confirma que eliminó su copia o que ya no la tiene; si no, no se borra nada parcialmente y el caso queda para revisión. El Centro de Privacidad verifica su identidad antes de entregar o borrar datos.
 
 **Gestión de incidentes:** Ante una vulneración de seguridad que afecte datos personales, la reportaremos a la Agencia de Protección de Datos Personales sin dilaciones indebidas y a más tardar dentro de las 72 horas siguientes a tomar conocimiento de ella, conforme al artículo 14 sexies, y, cuando corresponda, a los titulares afectados.
 
