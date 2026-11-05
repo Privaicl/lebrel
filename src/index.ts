@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { handleReserva } from './activities/reserva'
 import type { Env } from './env'
 import { fail } from './lib/respond'
 import { ensureSession, hasSession } from './lib/session'
@@ -23,5 +24,7 @@ app.use('/api/*', async (c, next) => {
   }
   return next()
 })
+
+app.post('/api/reserva', handleReserva)
 
 export default { fetch: app.fetch }
