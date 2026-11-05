@@ -11,10 +11,12 @@ Nada de esto es real. El negocio no existe y nadie lee las reservas.
 | Actividad | Datos | Finalidad | Conservación | Destinatario | Código |
 |---|---|---|---|---|---|
 | Reserva de hora | nombre, RUT, correo, teléfono, nombre y raza del perro, servicio, fecha, si tiene las vacunas al día, si pide retiro y dirección (solo con retiro) | Agendar y prestar el servicio de peluquería o guardería | 24 meses | Clínica Veterinaria Los Aromos SpA (solo guardería, para confirmar las vacunas; no recibe el correo ni la dirección) | `src/activities/reserva.ts`, `src/partners/veterinaria.ts`, `migrations/0001_reservas.sql` |
+| Analítica del sitio | identificador aleatorio del visitante (cookie `lb_vid`), página visitada, sitio de origen y navegador | Estadísticas de uso del sitio, solo si el visitante acepta "Analítica" en el banner de Privai | 13 meses | Ninguno | `src/activities/analitica.ts`, `public/js/analytics.js`, `migrations/0002_visitas.sql` |
 
 Cookies:
 
 - `lb_session`: esencial. Solo comprueba que el formulario sale de nuestra página.
+- `lb_vid`: no esencial, 13 meses. Solo se crea si la persona acepta "Analítica" en el banner de Privai.
 
 Los plazos se aplican con un cron diario a las 04:00 (hora de Chile), en `src/retention.ts`.
 La veterinaria solo recibe datos si su clave está configurada. En producción no lo está.
