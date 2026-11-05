@@ -12,6 +12,7 @@ Nada de esto es real. El negocio no existe y nadie lee las reservas.
 |---|---|---|---|---|---|
 | Reserva de hora | nombre, RUT, correo, teléfono, nombre y raza del perro, servicio, fecha, si tiene las vacunas al día, si pide retiro y dirección (solo con retiro) | Agendar y prestar el servicio de peluquería o guardería | 24 meses | Clínica Veterinaria Los Aromos SpA (solo guardería, para confirmar las vacunas; no recibe el correo ni la dirección) | `src/activities/reserva.ts`, `src/partners/veterinaria.ts`, `migrations/0001_reservas.sql` |
 | Analítica del sitio | identificador aleatorio del visitante (cookie `lb_vid`), página y sección (`#`) en que llega, una vez por carga de página, sitio de origen y navegador | Estadísticas de uso del sitio, solo si el visitante acepta "Analítica" en el banner de Privai | 13 meses | Ninguno | `src/activities/analitica.ts`, `public/js/analytics.js`, `migrations/0002_visitas.sql` |
+| Postulación a peluquero/a ("Trabaja con nosotros") | nombre, correo, teléfono, comuna, años de experiencia y descripción de la experiencia | Evaluar postulantes a peluquero/a | 6 meses | Ninguno | `src/activities/postulacion.ts`, `migrations/0003_postulaciones.sql` |
 
 Cookies:
 
@@ -29,13 +30,14 @@ Sin `PRIVAI_AGENT_KEY` no hace nada. La persona se identifica por su correo.
 
 | `node_key` | Acción | Qué hace |
 |---|---|---|
-| `lebrel_recopilar` | acceso (`collect`) | Entrega todas las reservas de la persona |
-| `lebrel_eliminar` | supresión (`delete`) | Avisa a la veterinaria si recibió datos y borra las reservas |
+| `lebrel_recopilar` | acceso (`collect`) | Entrega todas las reservas y postulaciones de la persona |
+| `lebrel_eliminar` | supresión (`delete`) | Avisa a la veterinaria si recibió datos y borra las reservas y postulaciones |
 
 La supresión es en cascada: las reservas que se compartieron con la veterinaria (guardería) se borran
 primero allá. Si la veterinaria no confirma (o falta su clave y no se le puede avisar), la tarea queda
 fallida en Privai para revisión y puede reintentarse; no se borra nada a medias.
 Las reservas que nunca se compartieron (por ejemplo, un baño) se borran sin llamar a la veterinaria.
+Las postulaciones no se comparten con nadie y se borran junto con las reservas.
 La analítica del sitio queda fuera: las visitas solo tienen el identificador de la cookie `lb_vid`.
 
 Las personas ejercen sus derechos en el centro de privacidad: https://privacidad.lebrel.cl.

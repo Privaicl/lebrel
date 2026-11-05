@@ -1,5 +1,6 @@
 import { SELF, env } from 'cloudflare:test'
 import { describe, expect, it } from 'vitest'
+import { MSG_ANIOS } from '../src/activities/postulacion'
 import { SERVICIOS } from '../src/activities/reserva'
 import { MSG } from '../src/lib/fields'
 
@@ -16,7 +17,7 @@ async function get(path: string): Promise<string> {
 describe('página', () => {
   it('tiene las secciones que enlazan la nav y las tareas siguientes', async () => {
     const html = await get('/')
-    for (const id of ['top', 'servicios', 'reservar', 'contacto']) expect(html).toContain(`id="${id}"`)
+    for (const id of ['top', 'servicios', 'reservar', 'trabaja', 'contacto']) expect(html).toContain(`id="${id}"`)
     expect(html).toMatch(/<nav>[\s\S]*class="links"/)
     expect(html).toContain('Sitio ficticio de demostración — no ingreses datos reales.')
     expect(html).toContain('Peluquería Canina Lebrel SpA · RUT 77.123.456-9')
@@ -36,10 +37,20 @@ describe('página', () => {
     expect(form).toMatch(/name="mayor_edad"[^>]*value="si"|value="si"[^>]*name="mayor_edad"/)
   })
 
+  it('el formulario de postulación envía los campos que la API lee', async () => {
+    const html = await get('/')
+    const form = html.match(/<form[^>]*id="f-postulacion"[\s\S]*?<\/form>/)?.[0] ?? ''
+    expect(form).toContain('action="/api/postulacion"')
+    for (const campo of ['nombre', 'correo', 'telefono', 'comuna', 'experiencia_anios', 'experiencia', 'sitio_web'])
+      expect(form).toContain(`name="${campo}"`)
+  })
+
   it('la revisión del navegador usa los mismos mensajes que el servidor', async () => {
     const js = await get('/js/site.js')
     for (const texto of [MSG.falta, MSG.rut, MSG.correo, MSG.vacunas, MSG.mayor_edad]) expect(js).toContain(texto)
     expect(js).toContain("wire(document.getElementById('f-reserva')")
+    expect(js).toContain("wire(document.getElementById('f-postulacion')")
+    for (const texto of [MSG.largo, MSG_ANIOS]) expect(js).toContain(texto)
   })
 
   it('el formulario de reserva explica para qué usamos los datos y enlaza el centro de privacidad', async () => {
@@ -47,6 +58,14 @@ describe('página', () => {
     const form = html.match(/<form[^>]*id="f-reserva"[\s\S]*?<\/form>/)?.[0] ?? ''
     expect(form).toContain(
       'Usamos tus datos para agendar y prestar el servicio. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.',
+    )
+  })
+
+  it('el formulario de postulación explica para qué usamos los datos y enlaza el centro de privacidad', async () => {
+    const html = await get('/')
+    const form = html.match(/<form[^>]*id="f-postulacion"[\s\S]*?<\/form>/)?.[0] ?? ''
+    expect(form).toContain(
+      'Usamos tus datos solo para evaluar tu postulación. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.',
     )
   })
 
