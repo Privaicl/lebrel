@@ -3,6 +3,7 @@ import { handleReserva } from './activities/reserva'
 import type { Env } from './env'
 import { fail } from './lib/respond'
 import { ensureSession, hasSession } from './lib/session'
+import { purgeExpired } from './retention'
 
 const app = new Hono<{ Bindings: Env }>()
 
@@ -27,4 +28,9 @@ app.use('/api/*', async (c, next) => {
 
 app.post('/api/reserva', handleReserva)
 
-export default { fetch: app.fetch }
+export default {
+  fetch: app.fetch,
+  scheduled(event: ScheduledController, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(purgeExpired(env.DB, new Date(event.scheduledTime)))
+  },
+}
