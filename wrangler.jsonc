@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lebrel",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-20",
+  "workers_dev": true,
+  // El Worker atiende la portada (para la cookie de sesión) y la API; el resto son archivos estáticos.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/", "/index.html", "/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lebrel",
+      "database_id": "f765c8ac-f5fb-424b-9b4a-6bcf9cb87f3e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "ALLOWED_ORIGINS": "https://lebrel.cl,https://www.lebrel.cl,https://lebrel.privai-demo.workers.dev,http://localhost:8787",
+    "PRIVAI_API_URL": "https://api.privai.cl"
+  },
+  "triggers": {
+    // 04:00 en Chile (UTC-3): purga de datos vencidos, ver src/retention.ts.
+    // Cada minuto: el agente de derechos ARSOP consulta sus tareas en Privai, ver src/derechos.ts.
+    "crons": ["0 7 * * *", "* * * * *"]
+  },
+  "observability": { "enabled": true }
+}

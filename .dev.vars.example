@@ -1,0 +1,4 @@
+# Copiar a .dev.vars solo para probar las integraciones en local.
+# En producción estas claves NO están configuradas: el envío a la veterinaria se omite.
+VETERINARIA_API_KEY=
+PRIVAI_AGENT_KEY=
