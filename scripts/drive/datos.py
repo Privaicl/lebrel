@@ -161,8 +161,12 @@ _PERROS = ["Luna", "Simón", "Canela", "Rocco", "Nala", "Max", "Maite", "Coco", 
 _RAZAS = ["Poodle toy", "Schnauzer miniatura", "Golden retriever", "Labrador retriever", "Mestizo",
           "Shih tzu", "Bichón frisé", "Yorkshire terrier", "Cocker spaniel", "Border collie",
           "Beagle", "Bulldog francés", "Pastor alemán", "Maltés", "Dachshund", "Samoyedo", "Galgo"]
-_CALLES = ["Avenida Irarrázaval", "Calle Dublé Almeyda", "Avenida Simón Bolívar", "Calle Suecia",
-           "Avenida Pedro de Valdivia", "Calle José Domingo Cañas", "Avenida Ossandón", "Calle Exequiel Fernández"]
+# Calles para las direcciones de retiro. No incluye la de la veterinaria ni la del arrendador, y cada
+# dirección se usa una sola vez.
+_CALLES = ["Calle Dublé Almeyda", "Avenida Simón Bolívar", "Calle Suecia", "Avenida Pedro de Valdivia",
+           "Calle José Domingo Cañas", "Avenida Ossandón", "Calle Exequiel Fernández", "Calle Juan Moya",
+           "Calle Hamburgo", "Calle Los Jardines", "Calle Lo Encalada", "Calle Brown Norte", "Calle Montenegro",
+           "Calle Pucará", "Calle Campo de Deportes", "Calle Coventry"]
 
 CLIENTE_RECLAMO = {
     "nombre": "Matías Fuenzalida Ortega",
@@ -184,6 +188,7 @@ def _fecha_2026():
 
 def _clientes():
     usados = {"María José Herrera Contreras", CLIENTE_RECLAMO["nombre"]}
+    calles = _rng.sample(_CALLES, len(_CALLES))
     filas = []
     while len(filas) < 28:
         nombre = f"{_rng.choice(_NOMBRES)} {_rng.choice(_APELLIDOS)} {_rng.choice(_APELLIDOS)}"
@@ -202,7 +207,7 @@ def _clientes():
             "servicio": servicio,
             "fecha": _fecha_2026(),
             "retiro": retiro,
-            "direccion": f"{_rng.choice(_CALLES)} 0, Ñuñoa" if retiro else None,
+            "direccion": f"{calles.pop()} 0, Ñuñoa" if retiro else None,
         })
     mj = _PERSONAS["maria_jose"]
     filas.append({
@@ -225,9 +230,10 @@ def valor_reserva(c: dict) -> int:
 
 
 def reservas_octubre():
-    """Reservas de octubre de 2026 para el log del sistema: clientes de la lista que vuelven."""
-    reservas = []
-    for _ in range(34):
+    """Reservas de octubre de 2026 para el log del sistema: las de octubre de la planilla, más las de
+    clientes de la lista que vuelven, hasta completar 34."""
+    reservas = [{**c, "creada": _rng.randint(9 * 3600, 21 * 3600)} for c in CLIENTES if c["fecha"].month == 10]
+    while len(reservas) < 34:
         c = _rng.choice(CLIENTES)
         while True:
             d = date(2026, 10, 1) + timedelta(days=_rng.randint(0, 30))

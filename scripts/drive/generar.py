@@ -1,9 +1,11 @@
 # Genera los documentos ficticios de la carpeta de Drive de Lebrel en drive/.
 # Uso: .venv-drive/bin/python -I scripts/drive/generar.py
+import io
 import random
 import re
 import sys
-from datetime import date, datetime, timedelta
+import zipfile
+from datetime import date, datetime, timedelta, timezone
 from email.header import Header
 from email.utils import format_datetime
 from pathlib import Path
@@ -43,7 +45,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 DRIVE = RAIZ / "drive"
 IMG = RAIZ / "public" / "img"
 CHILE = ZoneInfo("America/Santiago")
-rl_config.invariant = 1  # PDFs reproducibles: sin fecha de creación variable
+rl_config.invariant = 1  # PDFs reproducibles; la fecha de cada documento se fija en pdf()
 
 # Colores del sitio (public/css/site.css)
 MORADO = "#6236c9"
@@ -55,6 +57,13 @@ LAVANDA_2 = "#e6e0f2"
 PAPEL = "#fbf9fe"
 
 RAZON_MAYUS = EMPRESA["razon_social"].upper().replace(" SPA", " SpA")  # "SpA" se escribe así también en mayúsculas
+# Última modificación de cada archivo de Office (hora de Chile).
+ARRIENDO_MODIFICADO = datetime(2023, 2, 15, 9, 50)
+TRABAJO_MODIFICADO = datetime(2025, 3, 3, 8, 55)
+PLANILLA_MODIFICADA = datetime(2026, 10, 31, 18, 45)
+PRESENTACION_MODIFICADA = datetime(2026, 11, 3, 22, 10)
+ENTREVISTA_MODIFICADA = datetime(2026, 10, 26, 16, 20)
+
 CAMILA = datos.persona("camila")
 VALENTINA = datos.persona("valentina")
 
@@ -104,10 +113,40 @@ def miles(n) -> str:
     return f"{round(n):,}".replace(",", ".")
 
 
+def utc(local: datetime) -> datetime:
+    """Hora de Chile (sin zona) a UTC sin zona, que es como Office guarda sus fechas."""
+    return local.replace(tzinfo=CHILE).astimezone(timezone.utc).replace(tzinfo=None)
+
+
+def sellar_office(path: Path, modificado: datetime):
+    """Fija la fecha de modificación de un archivo de Office (propiedades y entradas del zip), para que no
+    quede la fecha en que se generó y el archivo salga igual cada vez. `modificado` es hora de Chile."""
+    path.write_bytes(_sellar_zip(path.read_bytes(), modificado))
+
+
+def _sellar_zip(datos_zip: bytes, modificado: datetime, embebido=False) -> bytes:
+    marca = utc(modificado).strftime("%Y-%m-%dT%H:%M:%SZ").encode()
+    with zipfile.ZipFile(io.BytesIO(datos_zip)) as z:
+        entradas = [(i.filename, z.read(i.filename)) for i in z.infolist()]
+    salida = io.BytesIO()
+    with zipfile.ZipFile(salida, "w") as z:
+        for nombre, contenido in entradas:
+            if nombre == "docProps/core.xml":
+                # Los libros de Excel de los gráficos (embebidos) traen también la fecha de creación actual.
+                campos = rb"modified|created" if embebido else rb"modified"
+                contenido = re.sub(rb"(<dcterms:(?:" + campos + rb")[^>]*>)[^<]*", rb"\g<1>" + marca, contenido)
+            elif nombre.endswith(".xlsx"):
+                contenido = _sellar_zip(contenido, modificado, embebido=True)
+            info = zipfile.ZipInfo(nombre, date_time=modificado.timetuple()[:6])
+            info.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(info, contenido)
+    return salida.getvalue()
+
+
 # ---------------------------------------------------------------- Word
 
 
-def nuevo_docx(titulo: str, autor: str, creado: datetime, encabezado: str):
+def nuevo_docx(titulo: str, autor: str, creado: datetime, modificado: datetime, encabezado: str):
     d = docx.Document()
     estilo = d.styles["Normal"]
     estilo.font.name = "Calibri"
@@ -139,7 +178,8 @@ def nuevo_docx(titulo: str, autor: str, creado: datetime, encabezado: str):
     campo_pagina(pie)
     cp = d.core_properties
     cp.title, cp.author, cp.last_modified_by = titulo, autor, autor
-    cp.created = cp.modified = creado
+    cp.created, cp.modified = utc(creado), utc(modificado)
+    cp.comments = ""
     cp.language = "es-CL"
     cp.revision = 3
     return d
@@ -227,7 +267,8 @@ def firmas(d, columnas):
 def contrato_arriendo(path):
     a = datos.persona("arrendador")
     d = nuevo_docx("Contrato de arrendamiento local Calle Los Aromos 0", "Valentina Rojas Fuentes",
-                   datetime(2023, 2, 13, 11, 20), "Contrato de arrendamiento · Calle Los Aromos 0, Ñuñoa")
+                   datetime(2023, 2, 13, 11, 20), ARRIENDO_MODIFICADO,
+                   "Contrato de arrendamiento · Calle Los Aromos 0, Ñuñoa")
     centrado(d, "CONTRATO DE ARRENDAMIENTO DE LOCAL COMERCIAL", 14, True, 4)
     centrado(d, a["nombre"].upper(), 11, True, 0)
     centrado(d, "A", 11, False, 0)
@@ -337,6 +378,7 @@ def contrato_arriendo(path):
          f"RUT {EMPRESA['rut']}"],
     ])
     d.save(path)
+    sellar_office(path, ARRIENDO_MODIFICADO)
 
 
 # ---------------------------------------------------------------- 2. contrato de trabajo
@@ -351,13 +393,15 @@ UTM_OCT = 69_874
 IMM = 539_000
 TASA_AFP = 0.1058  # 10% + comisión AFP Modelo
 CESANTIA_TRABAJADOR = 0.006
+APORTE_REFORMA = 0.035  # aporte del empleador de la reforma de pensiones (Ley N° 21.735) desde agosto de 2026
 
 
 def contrato_trabajo(path):
     c = CAMILA
     ingreso = c["ingreso"]
     d = nuevo_docx("Contrato de trabajo Camila Soto Muñoz", "Valentina Rojas Fuentes",
-                   datetime(2025, 2, 27, 18, 5), f"{EMPRESA['razon_social']} · Contrato individual de trabajo")
+                   datetime(2025, 2, 27, 18, 5), TRABAJO_MODIFICADO,
+                   f"{EMPRESA['razon_social']} · Contrato individual de trabajo")
     centrado(d, "CONTRATO INDIVIDUAL DE TRABAJO", 14, True, 18)
     parrafo(d, (
         f"En Santiago, a {fecha_larga(ingreso)}, entre {RAZON_MAYUS}, RUT {EMPRESA['rut']}, "
@@ -449,6 +493,7 @@ def contrato_trabajo(path):
         [c["nombre"].upper(), "TRABAJADORA", f"C.I. N° {c['rut']}"],
     ])
     d.save(path)
+    sellar_office(path, TRABAJO_MODIFICADO)
 
 
 # ---------------------------------------------------------------- PDF: estilos comunes
@@ -517,11 +562,20 @@ def membrete(titulo_pie):
     return dibujar
 
 
-def pdf(path, titulo, autor, asunto, flowables, pie, top=3.2):
+def pdf(path, titulo, autor, asunto, flowables, pie, fecha: datetime, top=3.2):
+    """`fecha` (hora de Chile) queda como fecha de creación y de modificación del PDF."""
     doc = SimpleDocTemplate(str(path), pagesize=LETTER, leftMargin=2 * cm, rightMargin=2 * cm,
                             topMargin=top * cm, bottomMargin=2.2 * cm, title=titulo, author=autor,
                             subject=asunto, creator="Lebrel")
-    doc.build(flowables, onFirstPage=membrete(pie), onLaterPages=membrete(pie))
+    horas = int(fecha.replace(tzinfo=CHILE).utcoffset().total_seconds() // 3600)
+    fecha_pdf = f"D:{fecha:%Y%m%d%H%M%S}{horas:+03d}'00'"
+    dibujar = membrete(pie)
+
+    def primera(canvas, d):
+        canvas.setDateFormatter(lambda *_: fecha_pdf)
+        dibujar(canvas, d)
+
+    doc.build(flowables, onFirstPage=primera, onLaterPages=dibujar)
 
 
 class Firma(Flowable):
@@ -607,6 +661,11 @@ def calcular_liquidacion():
     legales = afp + salud + cesantia
     haberes = imponible + no_imponible
     liquido = haberes - legales - ANTICIPO
+    ap_cesantia = round(imponible * 0.024)
+    ap_sis = round(imponible * 0.0154)
+    ap_mutual = round(imponible * 0.0093)
+    ap_reforma = round(imponible * APORTE_REFORMA)
+    aportes = ap_cesantia + ap_sis + ap_mutual + ap_reforma
     return locals()
 
 
@@ -677,8 +736,8 @@ def liquidacion(path):
         ("BACKGROUND", (3, -1), (4, -1), colors.HexColor(LAVANDA)),
         ("BOX", (0, 0), (1, -1), 0.6, colors.HexColor(LAVANDA_2)),
         ("BOX", (3, 0), (4, -1), 0.6, colors.HexColor(LAVANDA_2)),
-        ("TOPPADDING", (0, 0), (-1, -1), 3.5),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3.5),
+        ("TOPPADDING", (0, 0), (-1, -1), 2.5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
     ] + destacar))
     cuerpo += [t, Spacer(1, 12)]
 
@@ -696,16 +755,17 @@ def liquidacion(path):
         ("TOPPADDING", (0, 0), (-1, -1), 6),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
     ]))
-    cuerpo += [liquido, Spacer(1, 14)]
+    cuerpo += [liquido, Spacer(1, 10)]
 
     info = [
         ["Base de cálculo", "", "Aportes del empleador (informativo)", ""],
-        ["Base tributable", miles(L["tributable"]), "Seguro de cesantía (2,4%)", miles(L["imponible"] * 0.024)],
+        ["Base tributable", miles(L["tributable"]), "Seguro de cesantía (2,4%)", miles(L["ap_cesantia"])],
         ["Tramo impuesto único", "Exento (hasta 13,5 UTM)", "Seguro de invalidez y sobrevivencia (1,54%)",
-         miles(L["imponible"] * 0.0154)],
+         miles(L["ap_sis"])],
         ["UF al 31-10-2026", f"$ {UF_31_OCT:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."),
-         "Ley N° 16.744, mutualidad (0,93%)", miles(L["imponible"] * 0.0093)],
-        ["UTM octubre 2026", pesos(UTM_OCT), "Ingreso mínimo mensual", pesos(IMM)],
+         "Ley N° 16.744, mutualidad (0,93%)", miles(L["ap_mutual"])],
+        ["UTM octubre 2026", pesos(UTM_OCT), "Aporte empleador Ley N° 21.735 (3,5%)", miles(L["ap_reforma"])],
+        ["Ingreso mínimo mensual", pesos(IMM), "Total aportes del empleador", miles(L["aportes"])],
     ]
     t = Table(info, colWidths=[3.6 * cm, 4.2 * cm, 6.6 * cm, 3.1 * cm])
     t.setStyle(TableStyle([
@@ -716,6 +776,8 @@ def liquidacion(path):
         ("ALIGN", (1, 1), (1, -1), "RIGHT"),
         ("ALIGN", (3, 1), (3, -1), "RIGHT"),
         ("LINEBELOW", (0, 0), (-1, 0), 0.5, colors.HexColor(LAVANDA_2)),
+        ("FONT", (2, -1), (3, -1), "Helvetica-Bold", 8),
+        ("LINEABOVE", (3, -1), (3, -1), 0.5, colors.HexColor(NIEBLA)),
         ("TOPPADDING", (0, 0), (-1, -1), 2),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
     ]))
@@ -732,7 +794,8 @@ def liquidacion(path):
     firmas_t.setStyle(TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER")]))
     cuerpo.append(KeepTogether(firmas_t))
     pdf(path, "Liquidación de sueldo octubre 2026 · Camila Soto Muñoz", "Contabilidad Lebrel",
-        "Liquidación de sueldo", cuerpo, "Liquidación de sueldo · octubre 2026 · documento confidencial")
+        "Liquidación de sueldo", cuerpo, "Liquidación de sueldo · octubre 2026 · documento confidencial",
+        datetime(2026, 10, 29, 16, 20))
 
 
 # ---------------------------------------------------------------- 4. convenio con la veterinaria
@@ -860,7 +923,7 @@ def convenio(path):
     ]
     pdf(path, "Convenio de comunicación de datos · Clínica Veterinaria Los Aromos", "Valentina Rojas Fuentes",
         "Convenio de comunicación de datos personales", cuerpo,
-        f"Convenio Lebrel · {v['razon_social']} · {fecha_larga(firma_fecha)}")
+        f"Convenio Lebrel · {v['razon_social']} · {fecha_larga(firma_fecha)}", datetime(2026, 1, 15, 12, 10))
 
 
 # ---------------------------------------------------------------- 5. planilla de clientes
@@ -897,9 +960,9 @@ def planilla_clientes(path):
     wb.properties.creator = "Valentina Rojas Fuentes"
     wb.properties.lastModifiedBy = "Valentina Rojas Fuentes"
     wb.properties.title = "Clientes y reservas 2026"
-    wb.properties.created = datetime(2026, 1, 12, 9, 30)
-    wb.properties.modified = datetime(2026, 10, 31, 18, 45)
+    wb.properties.created = utc(datetime(2026, 1, 12, 9, 30))
     wb.save(path)
+    sellar_office(path, PLANILLA_MODIFICADA)  # openpyxl pone la hora actual al guardar; aquí se corrige
 
 
 # ---------------------------------------------------------------- 6. ficha de guardería
@@ -1031,7 +1094,7 @@ def ficha_bruno(path):
     firmas_t.setStyle(TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER")]))
     cuerpo.append(KeepTogether(firmas_t))
     pdf(path, "Ficha de ingreso guardería · Bruno", "Lebrel", "Ficha de ingreso a la guardería", cuerpo,
-        "Ficha de ingreso guardería · Bruno · uso interno")
+        "Ficha de ingreso guardería · Bruno · uso interno", datetime(2026, 6, 15, 9, 25))
 
 
 # ---------------------------------------------------------------- 7. presentación al banco
@@ -1049,10 +1112,12 @@ INVERSION = [
 CREDITO = 25_000_000
 TASA_MENSUAL = 0.012
 PLAZO = 48
+GRACIA = 3  # meses en que solo se pagan intereses
 
 
 def cuota_credito():
-    return round(CREDITO * TASA_MENSUAL / (1 - (1 + TASA_MENSUAL) ** -PLAZO))
+    """Cuota fija de los meses GRACIA+1 a PLAZO, después de los meses de gracia con solo intereses."""
+    return round(CREDITO * TASA_MENSUAL / (1 - (1 + TASA_MENSUAL) ** -(PLAZO - GRACIA)))
 
 
 def rgb(h):
@@ -1258,8 +1323,8 @@ def presentacion(path):
     aporte = total_inv - CREDITO
     cuota = cuota_credito()
     datos_credito = [("Monto del crédito", pesos(CREDITO)), ("Aporte propio", pesos(aporte)),
-                     ("Plazo", f"{PLAZO} meses (3 de gracia)"),
-                     ("Cuota estimada", f"{pesos(cuota)} al mes"),
+                     ("Plazo", f"{PLAZO} meses ({GRACIA} de gracia)"),
+                     ("Cuota estimada", f"{pesos(cuota)} (meses {GRACIA + 1} a {PLAZO})"),
                      ("Garantía", "FOGAPE y aval de la socia")]
     for i, (a, b) in enumerate(datos_credito):
         y = Inches(1.95) + i * Inches(0.78)
@@ -1276,14 +1341,20 @@ def presentacion(path):
     texto_pptx(s, Inches(0.8), Inches(6.0), Inches(11.5), Inches(0.5),
                f"Contacto: {VALENTINA['nombre']}, representante legal · {EMPRESA['correo']} · {EMPRESA['telefono']}",
                13, TINTA)
-    credito_foto(s, f"Cuota referencial con tasa de {TASA_MENSUAL:.1%} mensual; la tasa final la fija el banco.".replace(".", ",", 1))
+    interes = round(CREDITO * TASA_MENSUAL)
+    credito_foto(s, f"Cuota referencial con tasa de {TASA_MENSUAL:.1%} mensual".replace(".", ",")
+                 + f"; en los {GRACIA} meses de gracia se pagan solo intereses ({pesos(interes)} al mes). "
+                 "La tasa final la fija el banco.")
 
     prs.core_properties.title = "Lebrel · Solicitud de crédito pyme"
     prs.core_properties.author = "Valentina Rojas Fuentes"
     prs.core_properties.last_modified_by = "Valentina Rojas Fuentes"
-    prs.core_properties.created = datetime(2026, 10, 28, 20, 15)
-    prs.core_properties.modified = datetime(2026, 11, 3, 22, 40)
+    prs.core_properties.created = utc(datetime(2026, 10, 28, 20, 15))
+    prs.core_properties.modified = utc(PRESENTACION_MODIFICADA)
+    prs.core_properties.comments = ""
+    prs.core_properties.revision = 7
     prs.save(path)
+    sellar_office(path, PRESENTACION_MODIFICADA)
 
 
 # ---------------------------------------------------------------- 8. correo de reclamo
@@ -1319,7 +1390,7 @@ def correo_reclamo(path):
         f"- Cuando la barba le crezca, en unas seis semanas, le hacemos el corte clásico sin costo.\n"
         "- La irritación probablemente se debe al deslanado de los nudos. Si sigue en dos o tres días, "
         "llévalo a la veterinaria y nosotros nos hacemos cargo del costo de la consulta.\n\n"
-        f"Además, dejamos anotado en la reserva de {cli['perro']} que hay que llamarte antes de cambiar "
+        f"Además, dejamos anotado en las indicaciones del equipo que con {cli['perro']} hay que llamarte antes de cambiar "
         "cualquier cosa del corte.\n\n"
         f"Un abrazo,\n{VALENTINA['nombre']}\nLebrel, peluquería y guardería canina\n"
         f"{EMPRESA['direccion']}, {EMPRESA['comuna']} · {EMPRESA['telefono']} · {EMPRESA['web']}\n"
@@ -1449,7 +1520,7 @@ def lista_precios(path):
     ]))
     cuerpo.append(contacto)
     pdf(path, "Lista de precios 2026 · Lebrel", "Lebrel", "Lista de precios", cuerpo,
-        "Lista de precios 2026 · lebrel.cl")
+        "Lista de precios 2026 · lebrel.cl", datetime(2026, 2, 24, 18, 5))
 
 
 # ---------------------------------------------------------------- 11. entrevista
@@ -1481,7 +1552,8 @@ def turnos_entrevista():
 def entrevista(path):
     turnos, duracion = turnos_entrevista()
     d = nuevo_docx("Transcripción entrevista de procesos · Lebrel", "Francisca Morales",
-                   datetime(2026, 10, 23, 10, 5), "Privai · Levantamiento de procesos · Peluquería Canina Lebrel SpA")
+                   datetime(2026, 10, 23, 10, 5), ENTREVISTA_MODIFICADA,
+                   "Privai · Levantamiento de procesos · Peluquería Canina Lebrel SpA")
     centrado(d, "Transcripción de entrevista", 18, True, 2, TINTA)
     centrado(d, "Levantamiento de procesos para el Registro de Actividades de Tratamiento (RAT)", 11, False, 14, NIEBLA)
     meta = [
@@ -1534,6 +1606,7 @@ def entrevista(path):
     r.italic = True
     r.font.color.rgb = RGBColor.from_string(NIEBLA[1:])
     d.save(path)
+    sellar_office(path, ENTREVISTA_MODIFICADA)
 
 
 # ----------------------------------------------------------------

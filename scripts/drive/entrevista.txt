@@ -12,7 +12,7 @@ V: Ya, buenísimo. Te advierto que yo de leyes no sé mucho, eh. Yo sé de perro
 
 F: Para eso estoy yo. Partamos por lo básico. ¿Qué es Lebrel y hace cuánto que existe?
 
-V: Lebrel es una peluquería y guardería canina acá en Ñuñoa, en Calle Los Aromos. Abrimos en marzo de 2023, así que ya vamos para los cuatro años. Hacemos tres cosas, básicamente: baño, baño con corte y guardería por el día. Y aparte ofrecemos retiro y entrega a domicilio, que se puede sumar a cualquiera de los tres servicios. Atendemos de lunes a sábado, de nueve de la mañana a siete de la tarde. El domingo está cerrado, ese día es sagrado.
+V: Lebrel es una peluquería y guardería canina acá en Ñuñoa, en Calle Los Aromos. Abrimos en marzo de 2023, así que ya vamos para los cuatro años. Hacemos tres cosas, básicamente: baño, baño con corte y guardería por el día. Y aparte ofrecemos retiro y entrega a domicilio, que se puede sumar a cualquiera de los tres servicios. Atendemos de lunes a sábado, de nueve de la mañana a siete de la tarde.
 
 F: ¿Y cuántas personas trabajan contigo?
 
@@ -40,7 +40,7 @@ V: Solo si pide retiro. Eso lo cuidamos harto. Si alguien escribe su dirección 
 
 F: Muy bien. ¿Y la casilla de mayor de edad?
 
-V: Es porque el que reserva es el responsable del perro, y tiene que ser un adulto. Una vez nos llegó una reserva de un niño que quería bañar al perro de sorpresa para el cumpleaños de la mamá. Era muy tierno, pero no podemos. Ahora, sin la casilla marcada, la reserva no entra.
+V: Es porque el que reserva es el responsable del perro, y tiene que ser un adulto. Sin la casilla marcada, la reserva no entra.
 
 F: ¿Dónde queda guardada la reserva una vez que la envían?
 
@@ -52,7 +52,7 @@ V: Al sistema, solo yo. Las peluqueras y la asistente ven la agenda del día, qu
 
 F: ¿Y por cuánto tiempo guardan las reservas?
 
-V: Veinticuatro meses desde que la persona envía la reserva. Eso lo hace el sistema solo: todos los días, a las cuatro de la mañana, corre un proceso que borra lo que ya cumplió los dos años. Lo decidimos así porque los clientes vuelven. Un perro se baña cada uno o dos meses, y nos sirve ver qué se le hizo la vez anterior, qué corte, qué shampoo. Pero más de dos años ya no tiene sentido; el perro ya es otro, casi.
+V: Veinticuatro meses desde que la persona envía la reserva. Eso lo hace el sistema solo: todos los días, a las cuatro de la mañana, corre un proceso que borra lo que ya cumplió los dos años. Lo decidimos así porque los clientes vuelven. Un perro se baña cada uno o dos meses, y nos sirve ver cuándo vino la última vez y qué servicio pidió. Pero más de dos años ya no tiene sentido.
 
 F: Perfecto, eso calza con lo que vimos en el código. Pasemos a la guardería. ¿Cómo funciona un día normal?
 
@@ -60,7 +60,7 @@ V: La guardería es por el día, de nueve a siete. Los dueños los dejan en la m
 
 F: ¿Y cómo comprueban que las vacunas estén al día?
 
-V: Ahí entra la Clínica Veterinaria Los Aromos, que es la veterinaria del barrio, con la que tenemos un convenio. Cuando alguien reserva guardería, el sistema le manda la reserva a la clínica para que confirme que el perro tiene sus vacunas al día. Muchos de nuestros clientes atienden a sus perros ahí mismo, así que la clínica tiene el registro. Y si el perro se atiende en otra parte, le pedimos al dueño el carnet de vacunas y la clínica lo revisa.
+V: Ahí entra la Clínica Veterinaria Los Aromos, que es la veterinaria del barrio, con la que tenemos un convenio. Cuando alguien reserva guardería, el sistema le manda la reserva a la clínica para que confirme que el perro tiene sus vacunas al día. Muchos de nuestros clientes atienden a sus perros ahí mismo, así que la clínica tiene el registro. Y si el perro se atiende en otra parte, el dueño lleva el carnet de vacunas a la clínica para que lo revisen; nosotros no recibimos el carnet ni se lo mandamos.
 
 F: ¿Qué datos le mandan exactamente a la veterinaria?
 
@@ -124,7 +124,7 @@ V: En la misma base de datos del sitio, en Cloudflare, por trece meses. La cooki
 
 F: ¿Y para qué la usan, en concreto?
 
-V: Para saber qué mira la gente. Por ejemplo, vimos que mucha gente llega desde Instagram directo a la sección de guardería, y eso nos ayudó a decidir que había que ampliar el patio. Es más para tomar decisiones del negocio que otra cosa.
+V: Para saber qué mira la gente. Por ejemplo, vimos que mucha gente llega desde Instagram directo a la sección de guardería, y eso nos ayudó a decidir que había que ampliar el patio.
 
 F: Bien. Ahora, los derechos de las personas. ¿Qué pasa si un cliente te pide ver sus datos, o que los borres?
 
@@ -142,9 +142,13 @@ F: ¿Y si te lo piden por otro lado? Por WhatsApp, o directamente en el mesón.
 
 V: Pasa, sobre todo por WhatsApp. Les mandamos el link del centro de privacidad y les explicamos que ahí queda registrado y que les respondemos dentro del plazo, que son treinta días. Si la persona no se maneja con eso, yo misma la ayudo a ingresar la solicitud desde el computador del local. Y ojo, el centro cubre lo que está en el sitio. Si alguien me pide que borre sus chats de WhatsApp o una foto de su perro en Instagram, eso lo hago yo a mano, y lo dejo anotado en la misma solicitud.
 
+F: ¿Y cuánto tiempo queda guardada cada solicitud?
+
+V: La solicitud y nuestra respuesta quedan registradas en Privai mientras dure el caso y cuatro años más, que es el plazo de prescripción de la ley. Es la evidencia de que respondimos bien y a tiempo, por si alguien reclama después.
+
 F: Muy bien. Te propongo que pasemos al personal, que es un mundo aparte. ¿Cómo contratan, por ejemplo, a una peluquera?
 
-V: Publicamos el aviso en Instagram y en un par de portales de empleo. Las postulantes mandan su currículum al correo del local. Hacemos una entrevista y una prueba práctica: le pedimos que bañe y corte un perro, con un dueño que acepte, que generalmente es el perro de alguien del equipo. Mi perra ya está acostumbrada a ser modelo.
+V: Publicamos el aviso en Instagram y en un par de portales de empleo. Las postulantes mandan su currículum al correo del local. Hacemos una entrevista y una prueba práctica: le pedimos que bañe y corte un perro, con un dueño que acepte, que generalmente es el perro de alguien del equipo.
 
 F: ¿Y qué pasa con los currículums de las personas que no quedan?
 
@@ -164,7 +168,7 @@ V: A fin de mes le mando a la contadora una planilla con lo que pasó en el mes 
 
 F: ¿Y a los trabajadores cómo les llega la liquidación?
 
-V: La imprimimos, la firman y una copia queda en su carpeta. Además se la mando en PDF a cada uno a su correo personal. Siempre por separado, nunca en un grupo; eso lo aprendí a la mala el primer año, cuando casi mando todas las liquidaciones juntas.
+V: La imprimimos, la firman y una copia queda en su carpeta. Además se la mando en PDF a cada uno a su correo personal. Siempre por separado, nunca en un grupo.
 
 F: Eso es importante. ¿Y las licencias médicas? Porque ahí aparecen datos de salud.
 
@@ -210,6 +214,14 @@ F: ¿Mandan promociones por WhatsApp?
 
 V: No. Las promociones van solo en el boletín, a quien se inscribió, y ese consentimiento lo maneja Privai. Por WhatsApp solo respondemos consultas y avisamos cosas de la reserva, como "tu perro ya está listo" o "el chofer va llegando".
 
+F: Cuéntame del boletín, entonces.
+
+V: Es un correo una vez al mes con novedades y promociones: los cupos de la guardería en vacaciones, algún descuento de temporada. La persona se inscribe en el centro de privacidad con su nombre y su correo, y el consentimiento lo registra Privai por cuenta nuestra; el sitio no guarda suscriptores. El boletín lo escribo yo y lo mando desde el correo del local, con copia oculta, solo a quienes tienen el consentimiento vigente en Privai. Antes de cada envío reviso la lista ahí, así que si alguien se dio de baja ya no le llega, y cada boletín trae el link para darse de baja.
+
+F: ¿Y hasta cuándo guardan esos datos?
+
+V: El nombre y el correo los usamos mientras la persona siga inscrita; cuando se da de baja, sale de la lista. El registro del consentimiento queda en Privai cuatro años, como evidencia.
+
 F: Perfecto. Y lo último, Instagram.
 
 V: Instagram es nuestra vitrina. Publicamos fotos de los perros después del baño o del corte, el clásico antes y después, y en las historias subimos fotos de la guardería. Funciona muy bien: más o menos la mitad de los clientes nuevos llegan por ahí.
@@ -244,7 +256,7 @@ V: Emitimos boleta electrónica, que no lleva datos del cliente. Si alguien pide
 
 F: Perfecto, Valentina. Con esto tengo bastante. Déjame resumirte lo que voy a armar, y me corriges si algo no calza. Las actividades serían: la reserva de hora en la web; la comunicación a la veterinaria para la guardería; la ficha de ingreso de la guardería; el retiro a domicilio; la analítica del sitio; la atención de los derechos de las personas; la selección de personal; los contratos y las remuneraciones con la contadora; la atención por WhatsApp; las fotos en Instagram; y el correo, con las consultas y los reclamos. ¿Me falta algo?
 
-V: Creo que no. Bueno, el boletín, pero ese lo maneja Privai, ¿cierto?
+V: Creo que no. Bueno, el boletín, pero el consentimiento de ese lo maneja Privai, ¿cierto?
 
 F: Sí, el consentimiento del boletín queda registrado en Privai, pero igual lo incluyo como actividad de Lebrel, porque la responsable eres tú. Te voy a mandar el borrador del registro la próxima semana para que lo revises. Lo que más me importa que mires son los plazos de conservación, que estén tal como me los dijiste, y que no se me haya quedado ningún destinatario afuera.
 
