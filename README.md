@@ -21,6 +21,28 @@ Cookies:
 Los plazos se aplican con un cron diario a las 04:00 (hora de Chile), en `src/retention.ts`.
 La veterinaria solo recibe datos si su clave está configurada. En producción no lo está.
 
+## Derechos ARSOP
+
+Lebrel es un agente de Privai (`src/derechos.ts`). Cada minuto consulta las tareas pendientes de Privai,
+toma las que le corresponden por `node_key`, las ejecuta y entrega el resultado. Privai nunca llama a Lebrel.
+Sin `PRIVAI_AGENT_KEY` no hace nada. La persona se identifica por su correo.
+
+| `node_key` | Acción | Qué hace |
+|---|---|---|
+| `lebrel_recopilar` | acceso (`collect`) | Entrega todas las reservas de la persona |
+| `lebrel_eliminar` | supresión (`delete`) | Avisa a la veterinaria si recibió datos y borra las reservas |
+
+La supresión es en cascada: las reservas que se compartieron con la veterinaria (guardería) se borran
+primero allá. Si la veterinaria no confirma, no se borra nada y la tarea falla para que Privai la reintente.
+Las reservas que nunca se compartieron (por ejemplo, un baño) se borran sin llamar a la veterinaria.
+La analítica del sitio queda fuera: las visitas solo tienen el identificador de la cookie `lb_vid`.
+
+Las personas ejercen sus derechos en el centro de privacidad: https://privacidad.lebrel.cl.
+
+**Importante:** los bloques "Agente" de los workflows de Privai deben usar estas `node_key`
+(`lebrel_recopilar` y `lebrel_eliminar`). Hay que actualizarlas en los workflows, porque si no coinciden
+el agente no toma ninguna tarea.
+
 ## Cómo probarlo
 
 Una persona puede cambiar el código y ver cómo cambia el RAT en Veil antes de hacer merge.

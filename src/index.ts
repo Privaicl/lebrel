@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { handleCollect } from './activities/analitica'
 import { handleReserva } from './activities/reserva'
+import { CRON_PRIVAI, atenderPrivai } from './derechos'
 import type { Env } from './env'
 import { fail } from './lib/respond'
 import { ensureSession, hasSession } from './lib/session'
@@ -34,6 +35,7 @@ app.post('/api/collect', handleCollect)
 export default {
   fetch: app.fetch,
   scheduled(event: ScheduledController, env: Env, ctx: ExecutionContext) {
-    ctx.waitUntil(purgeExpired(env.DB, new Date(event.scheduledTime)))
+    if (event.cron === CRON_PRIVAI) ctx.waitUntil(atenderPrivai(env))
+    else ctx.waitUntil(purgeExpired(env.DB, new Date(event.scheduledTime)))
   },
 }
