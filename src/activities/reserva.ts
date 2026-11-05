@@ -12,6 +12,7 @@ import {
 } from '../lib/fields'
 import { fail, ok } from '../lib/respond'
 import { isValidRut, normalizeRut } from '../lib/rut'
+import { compartirConVeterinaria, debeCompartir } from '../partners/veterinaria'
 
 // Reserva de hora de peluquería o guardería. Se guarda para agendar el servicio;
 // en guardería, la veterinaria asociada confirma las vacunas.
@@ -114,6 +115,12 @@ export async function handleReserva(c: Context<{ Bindings: Env }>): Promise<Resp
       row.created_at,
     )
     .run()
+
+  if (debeCompartir(row)) {
+    c.executionCtx.waitUntil(
+      compartirConVeterinaria(row, c.env).then((r) => (r === 'enviado' ? markShared(c.env.DB, row.id) : undefined)),
+    )
+  }
 
   return ok(c, MENSAJE_OK, 'reservar')
 }
