@@ -1,5 +1,8 @@
 // Plazos de conservación. El cron diario (wrangler.jsonc, 04:00 en Chile) borra lo vencido.
-export const RETENCION: ReadonlyArray<{ tabla: 'reservas'; meses: number }> = [{ tabla: 'reservas', meses: 24 }]
+export const RETENCION: ReadonlyArray<{ tabla: 'reservas' | 'visitas'; meses: number }> = [
+  { tabla: 'reservas', meses: 24 },
+  { tabla: 'visitas', meses: 13 },
+]
 
 export function cutoff(now: Date, meses: number): string {
   const d = new Date(now)
