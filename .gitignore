@@ -4,3 +4,4 @@ node_modules
 .superpowers
 .impeccable
 .playwright-mcp
+.venv-drive

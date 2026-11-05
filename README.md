@@ -56,6 +56,25 @@ Una persona puede cambiar el código y ver cómo cambia el RAT en Veil antes de 
 4. Hace commit en una rama nueva y abre un PR.
 5. En Veil, el RAT muestra el dato nuevo en la actividad "Reserva de hora".
 
+## Documentos de Drive
+
+`drive/` tiene 11 documentos ficticios del negocio para subir a una carpeta de Google Drive y mostrar el
+clasificador de documentos de Privai: contratos, una liquidación de sueldo, el convenio con la veterinaria,
+la planilla de clientes, una ficha de guardería, una presentación al banco, un correo de reclamo, un log del
+sistema de reservas, la lista de precios y la transcripción de una entrevista con la dueña sobre sus
+procesos, para que Veil arme el RAT. Los RUT tienen dígito verificador válido pero son inventados, y los
+correos usan `correo.example`.
+
+Para regenerarlos y revisarlos:
+
+```bash
+python3 -m venv .venv-drive && .venv-drive/bin/pip install -r scripts/drive/requirements.txt
+.venv-drive/bin/python -I scripts/drive/generar.py
+.venv-drive/bin/python -I scripts/drive/revisar.py   # 11/11 OK
+```
+
+El texto de la entrevista está en `scripts/drive/entrevista.txt`.
+
 ## Desarrollo
 
 ```bash

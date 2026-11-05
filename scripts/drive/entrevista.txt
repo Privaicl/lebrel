@@ -1,0 +1,253 @@
+# Transcripción de la entrevista de levantamiento de procesos (Lebrel).
+# Cada turno empieza con "F:" (Francisca Morales, Privai) o "V:" (Valentina Rojas Fuentes, Lebrel).
+# generar.py le pone las marcas de tiempo según la duración de cada turno.
+
+F: Ya, creo que está grabando. Valentina, antes de partir, ¿me confirmas que estás de acuerdo con que grabemos la conversación? La grabación la uso solo para transcribirla y la borro cuando tengamos el registro listo.
+
+V: Sí, sí, de acuerdo. Graba no más.
+
+F: Perfecto. Te cuento al tiro de qué se trata, para que no te pille de sorpresa. Con la ley nueva de datos personales, la 21.719, las empresas tienen que saber qué datos personales tratan, para qué, dónde los guardan, quién los ve, a quién se los pasan y por cuánto tiempo los conservan. Todo eso se ordena en lo que llamamos el registro de actividades de tratamiento, el RAT. Una parte la sacamos directamente del código del sitio web, pero hay muchas cosas que pasan fuera del sitio y que solo tú sabes. Así que la idea es que me cuentes cómo funciona Lebrel en el día a día, con tus palabras, y yo te voy preguntando.
+
+V: Ya, buenísimo. Te advierto que yo de leyes no sé mucho, eh. Yo sé de perros.
+
+F: Para eso estoy yo. Partamos por lo básico. ¿Qué es Lebrel y hace cuánto que existe?
+
+V: Lebrel es una peluquería y guardería canina acá en Ñuñoa, en Calle Los Aromos. Abrimos en marzo de 2023, así que ya vamos para los cuatro años. Hacemos tres cosas, básicamente: baño, baño con corte y guardería por el día. Y aparte ofrecemos retiro y entrega a domicilio, que se puede sumar a cualquiera de los tres servicios. Atendemos de lunes a sábado, de nueve de la mañana a siete de la tarde. El domingo está cerrado, ese día es sagrado.
+
+F: ¿Y cuántas personas trabajan contigo?
+
+V: Somos cinco, contándome a mí. Hay dos peluqueras, una asistente que está a cargo de la guardería y un chofer que trabaja media jornada y hace los retiros. Yo hago de todo un poco: atiendo, confirmo las horas, llevo la administración, las redes sociales... y cuando falta alguien, también baño perros. Y afuera tenemos una contadora externa que nos lleva la contabilidad y los sueldos.
+
+F: Perfecto, a eso vamos a llegar después. Empecemos por las reservas, que es lo más importante del negocio. ¿Cómo llega un cliente a reservar?
+
+V: Lo principal es la web, lebrel.cl. Ahí hay un formulario de reserva. La persona pone su nombre, su RUT, su correo y su teléfono; después el nombre del perro y la raza; elige el servicio y la fecha que le acomoda; dice si el perro tiene las vacunas al día y si quiere retiro a domicilio. Si pide retiro, escribe la dirección. Y al final tiene que marcar una casilla que dice que es mayor de dieciocho años.
+
+F: Vamos por partes. ¿Para qué usan cada uno de esos datos? Partamos por el RUT, que es el que más le llama la atención a la gente.
+
+V: El RUT es para identificar al cliente. Al principio nos pasaba que teníamos dos clientas con el mismo nombre y las dos con un poodle, te lo juro, y se nos mezclaban las fichas. Con el RUT sabemos quién es quién. También lo usa la veterinaria para la guardería, pero eso te lo cuento después.
+
+F: ¿Y el correo y el teléfono?
+
+V: Para confirmar la hora. El formulario no agenda solo: la reserva queda pedida y una persona la confirma. Normalmente llamo yo o mando un WhatsApp; si no contestan, escribo al correo. La fecha que ponen en la web es la que prefieren, pero la hora exacta la cuadramos nosotras según cómo esté la agenda ese día.
+
+F: O sea, no hay ninguna decisión automática. Siempre confirma una persona.
+
+V: Siempre. El formulario solo revisa que esté todo completo y que se cumplan los requisitos del servicio. Por ejemplo, si alguien elige guardería y dice que el perro no tiene las vacunas al día, el formulario no recibe la reserva y le explica por qué. Tampoco acepta fechas pasadas ni fechas muy lejanas, de más de tres meses. Pero aceptar o no a un cliente, eso nunca lo decide el sistema.
+
+F: ¿Y la dirección?
+
+V: Solo si pide retiro. Eso lo cuidamos harto. Si alguien escribe su dirección pero marca que no quiere retiro, el sistema no la guarda: la descarta. No tiene ningún sentido tener la dirección de alguien que viene a dejar al perro caminando.
+
+F: Muy bien. ¿Y la casilla de mayor de edad?
+
+V: Es porque el que reserva es el responsable del perro, y tiene que ser un adulto. Una vez nos llegó una reserva de un niño que quería bañar al perro de sorpresa para el cumpleaños de la mamá. Era muy tierno, pero no podemos. Ahora, sin la casilla marcada, la reserva no entra.
+
+F: ¿Dónde queda guardada la reserva una vez que la envían?
+
+V: En la base de datos del sitio, que está en Cloudflare. Es el proveedor que aloja la página y la base de datos. Yo reviso las reservas nuevas ahí todas las mañanas, antes de abrir.
+
+F: ¿Quién más tiene acceso a esas reservas?
+
+V: Al sistema, solo yo. Las peluqueras y la asistente ven la agenda del día, que yo imprimo en la mañana. Ahí aparece el nombre del perro, la raza, el servicio, la hora, y el nombre del dueño con su teléfono, por si hay que llamarlo porque el perro tiene nudos o algo así. El RUT y el correo no van en la hoja. Y al cerrar, la hoja va a la trituradora.
+
+F: ¿Y por cuánto tiempo guardan las reservas?
+
+V: Veinticuatro meses desde que la persona envía la reserva. Eso lo hace el sistema solo: todos los días, a las cuatro de la mañana, corre un proceso que borra lo que ya cumplió los dos años. Lo decidimos así porque los clientes vuelven. Un perro se baña cada uno o dos meses, y nos sirve ver qué se le hizo la vez anterior, qué corte, qué shampoo. Pero más de dos años ya no tiene sentido; el perro ya es otro, casi.
+
+F: Perfecto, eso calza con lo que vimos en el código. Pasemos a la guardería. ¿Cómo funciona un día normal?
+
+V: La guardería es por el día, de nueve a siete. Los dueños los dejan en la mañana y los retiran en la tarde, o los pasa a buscar el chofer. Los perros juegan, salen a pasear y duermen siesta, en grupos chicos, según tamaño y carácter. Recibimos hasta doce perros por día, no más, porque el patio no da para más. Y como están todos juntos, exigimos que tengan las vacunas al día: la antirrábica, la óctuple y la de la tos de las perreras. Un perro enfermo te contagia a todo el grupo en una tarde.
+
+F: ¿Y cómo comprueban que las vacunas estén al día?
+
+V: Ahí entra la Clínica Veterinaria Los Aromos, que es la veterinaria del barrio, con la que tenemos un convenio. Cuando alguien reserva guardería, el sistema le manda la reserva a la clínica para que confirme que el perro tiene sus vacunas al día. Muchos de nuestros clientes atienden a sus perros ahí mismo, así que la clínica tiene el registro. Y si el perro se atiende en otra parte, le pedimos al dueño el carnet de vacunas y la clínica lo revisa.
+
+F: ¿Qué datos le mandan exactamente a la veterinaria?
+
+V: Solo lo necesario para eso. El nombre del dueño, el RUT y el teléfono; el nombre y la raza del perro; la fecha de la reserva; si el cliente dijo que las vacunas están al día; y un número interno de la reserva, para que después nos podamos referir a ella. El correo y la dirección no se mandan nunca. Eso quedó así a propósito cuando armamos el sistema.
+
+F: ¿Y en las reservas de baño o de corte?
+
+V: Ahí no se manda nada. Solo la guardería. Para un baño, la veterinaria no tiene por qué saber nada.
+
+F: ¿Qué hace la clínica con esa información? ¿La guarda?
+
+V: La usa solo para confirmar las vacunas. Eso está en el convenio que firmamos en enero: dice qué datos recibe, para qué, por cuánto tiempo los puede guardar y cómo los tiene que borrar. La clínica guarda la confirmación como máximo doce meses desde la fecha de la reserva. Y si un cliente nos pide borrar sus datos, primero le pedimos a la clínica que borre la confirmación que le mandamos, y recién cuando nos confirma que la borró, o que ya no la tenía, borramos nosotros.
+
+F: ¿La clínica le puede mandar publicidad a tus clientes con esos datos?
+
+V: No, para nada. El convenio lo prohíbe expresamente. No puede usarlos para nada más, ni pasárselos a nadie.
+
+F: Además del sistema, ¿hay algo en papel en la guardería?
+
+V: Sí, la ficha de ingreso. La primera vez que un perro viene a la guardería, el dueño llena una ficha: los datos del perro, la edad, el peso, si está esterilizado, las fechas de las vacunas, si tiene alergias, si toma algún remedio, cómo se porta con otros perros, si le tiene miedo a algo. Y los datos del dueño, con su teléfono, y un contacto de emergencia, por si no lo ubicamos. Ahí también firma la autorización para llevar al perro a la clínica si pasa algo, y si nos deja publicar fotos del perro.
+
+F: ¿Dónde guardan esas fichas?
+
+V: La ficha en papel queda en un archivador con llave en la oficina. La escaneamos y queda una copia en el Drive de Lebrel, en una carpeta de guardería que solo vemos la asistente y yo. La asistente la necesita porque es la que está con los perros todo el día: tiene que saber si uno es alérgico al pollo o si se esconde cuando truena.
+
+F: ¿Y por cuánto tiempo la conservan?
+
+V: Mientras el perro siga viniendo. Si pasan dos años sin que venga, la ficha se destruye y se borra el escaneo. Eso lo revisamos una vez al año, en enero, que es más tranquilo.
+
+F: El contacto de emergencia es una tercera persona, que no firmó nada. ¿Cómo lo manejan?
+
+V: Le pedimos al dueño que le avise a esa persona que la dejó como contacto. Y solo lo usamos para eso: si pasa algo con el perro y no ubicamos al dueño. Por suerte nunca hemos tenido que llamar a ninguno.
+
+F: Muy bien. Vamos al retiro a domicilio.
+
+V: El retiro se suma a cualquier servicio. El chofer pasa a buscar al perro a la casa, lo trae al local y después lo devuelve. Tenemos un recorrido en la mañana y otro en la tarde, más que nada por Ñuñoa, Providencia y La Reina.
+
+F: ¿Qué datos necesita el chofer?
+
+V: El nombre del dueño, el teléfono, la dirección y el nombre del perro, nada más. Yo armo la hoja de ruta en la mañana con las reservas que pidieron retiro. Antes se la mandaba por WhatsApp a su celular personal, pero eso lo cambiamos el año pasado. Ahora la hoja va impresa y él usa el celular del local para llamar a los clientes cuando va llegando. Al final del día, la hoja vuelve a la oficina y va a la trituradora, igual que la agenda.
+
+F: Excelente. ¿El chofer tiene acceso al sistema de reservas?
+
+V: No, solo a la hoja del día.
+
+F: ¿Y la dirección queda guardada en la reserva?
+
+V: Sí, queda en la reserva y se borra junto con ella, a los veinticuatro meses.
+
+F: Pasemos al sitio web en sí. Cuando alguien entra a lebrel.cl, ¿qué pasa con las cookies y la analítica?
+
+V: Esto lo tengo más claro porque lo vimos hace poco. Al entrar aparece el banner de cookies, que es de Privai. Hay una cookie esencial, lb_session, que solo sirve para comprobar que el formulario se envía desde nuestra página, para que no nos lleguen reservas falsas de robots. Esa no se guarda en ninguna parte y se borra al cerrar el navegador.
+
+F: ¿Y la otra?
+
+V: La otra es lb_vid, la de analítica. Solo se crea si la persona acepta "Analítica" en el banner. Si no acepta, el código de analítica ni siquiera se carga. Si acepta, por cada visita guardamos qué sección vio, desde qué sitio llegó, por ejemplo si viene de Instagram o de Google, y qué navegador usa. Todo con un identificador al azar, nada más. No guardamos el nombre, ni el correo, ni la IP, y no se cruza con las reservas.
+
+F: ¿Dónde queda eso y por cuánto tiempo?
+
+V: En la misma base de datos del sitio, en Cloudflare, por trece meses. La cookie dura trece meses y las visitas se borran a los trece meses, con el mismo proceso de las cuatro de la mañana. Es analítica propia; no se la mandamos a nadie, ni a Google ni a nadie.
+
+F: ¿Y para qué la usan, en concreto?
+
+V: Para saber qué mira la gente. Por ejemplo, vimos que mucha gente llega desde Instagram directo a la sección de guardería, y eso nos ayudó a decidir que había que ampliar el patio. Es más para tomar decisiones del negocio que otra cosa.
+
+F: Bien. Ahora, los derechos de las personas. ¿Qué pasa si un cliente te pide ver sus datos, o que los borres?
+
+V: Para eso está el centro de privacidad, en privacidad.lebrel.cl, que también es de Privai. La persona entra, elige qué quiere pedir, por ejemplo acceso o eliminación, y se verifica con un código que le llega al correo. Lo importante es que la persona se identifica con su correo, el mismo que usó para reservar.
+
+F: ¿Y qué pasa después?
+
+V: Nuestro sistema revisa cada minuto si hay solicitudes pendientes en Privai. Si es de acceso, junta todas las reservas asociadas a ese correo y se las entrega, con todos los datos tal como están guardados. Si es de eliminación, revisa si alguna de esas reservas se compartió con la veterinaria. Si se compartió, primero le pide a la clínica que la borre, y cuando la clínica confirma, borra las reservas. Si la clínica no responde, no se borra nada a medias: la solicitud queda pendiente y se vuelve a intentar. Y las reservas que nunca se compartieron, como un baño, se borran directo, sin preguntarle a la clínica.
+
+F: ¿Y la analítica?
+
+V: La analítica queda fuera, porque las visitas no tienen el correo, solo el número al azar de la cookie. No hay forma de saber qué visitas son de quién. Si alguien no quiere que lo midan, retira el consentimiento en el banner o borra la cookie, y listo.
+
+F: ¿Y si te lo piden por otro lado? Por WhatsApp, o directamente en el mesón.
+
+V: Pasa, sobre todo por WhatsApp. Les mandamos el link del centro de privacidad y les explicamos que ahí queda registrado y que les respondemos dentro del plazo, que son treinta días. Si la persona no se maneja con eso, yo misma la ayudo a ingresar la solicitud desde el computador del local. Y ojo, el centro cubre lo que está en el sitio. Si alguien me pide que borre sus chats de WhatsApp o una foto de su perro en Instagram, eso lo hago yo a mano, y lo dejo anotado en la misma solicitud.
+
+F: Muy bien. Te propongo que pasemos al personal, que es un mundo aparte. ¿Cómo contratan, por ejemplo, a una peluquera?
+
+V: Publicamos el aviso en Instagram y en un par de portales de empleo. Las postulantes mandan su currículum al correo del local. Hacemos una entrevista y una prueba práctica: le pedimos que bañe y corte un perro, con un dueño que acepte, que generalmente es el perro de alguien del equipo. Mi perra ya está acostumbrada a ser modelo.
+
+F: ¿Y qué pasa con los currículums de las personas que no quedan?
+
+V: Los guardamos seis meses, por si se abre otro cupo, y después los borramos del correo y de la carpeta. En el mismo correo en que les avisamos que no quedaron, les decimos que vamos a guardar el currículum por ese tiempo y que nos pueden pedir que lo borremos antes.
+
+F: Y cuando alguien queda contratado, ¿qué datos le piden?
+
+V: Lo que va en el contrato: nombre, RUT, nacionalidad, fecha de nacimiento, estado civil y domicilio. Y para el sueldo: la AFP, si está en Isapre o en Fonasa, y la cuenta bancaria para la transferencia. Además le pedimos un contacto de emergencia, igual que en la guardería. No pedimos certificado de antecedentes ni nada de eso.
+
+F: ¿Dónde queda toda esa información?
+
+V: Hay una carpeta por trabajador. La física está en el mismo archivador con llave, y la digital en el Drive, en una carpeta de personal que solo vemos la contadora y yo. Ahí está el contrato, los anexos, las liquidaciones, las vacaciones y los comprobantes de pago de las cotizaciones.
+
+F: Cuéntame cómo funciona el proceso de los sueldos con la contadora.
+
+V: A fin de mes le mando a la contadora una planilla con lo que pasó en el mes para cada persona: días trabajados, comisiones, horas extra si hubo, anticipos y licencias. Ella prepara las liquidaciones de sueldo, me las manda para revisarlas y yo hago las transferencias. Después ella paga las cotizaciones en Previred: la AFP, la salud, el seguro de cesantía y la mutual. También sube el libro de remuneraciones electrónico a la Dirección del Trabajo y declara el impuesto en el SII. Una vez al año hace las declaraciones juradas de sueldos.
+
+F: ¿Y a los trabajadores cómo les llega la liquidación?
+
+V: La imprimimos, la firman y una copia queda en su carpeta. Además se la mando en PDF a cada uno a su correo personal. Siempre por separado, nunca en un grupo; eso lo aprendí a la mala el primer año, cuando casi mando todas las liquidaciones juntas.
+
+F: Eso es importante. ¿Y las licencias médicas? Porque ahí aparecen datos de salud.
+
+V: Las licencias se tramitan en forma electrónica y la contadora las ve para hacer el cálculo. Yo solo necesito saber los días, desde cuándo hasta cuándo. El diagnóstico no lo veo y no me interesa verlo. Y no queda en la carpeta del trabajador; ahí solo queda el comprobante con las fechas.
+
+F: ¿La contadora trabaja con contrato?
+
+V: Sí, tenemos un contrato de prestación de servicios. Hace un año le agregamos una cláusula de confidencialidad y de tratamiento de datos por encargo: que usa los datos de los trabajadores solo para la contabilidad y las remuneraciones de Lebrel, que no se los pasa a nadie más que a las instituciones que corresponde, como Previred, la Dirección del Trabajo o el SII, y que si termina el contrato nos devuelve todo y lo borra de su lado.
+
+F: ¿Y cuánto tiempo guardan la documentación del personal?
+
+V: Mientras dure el contrato y cinco años después de que la persona se va. Eso me lo recomendó la contadora, por los plazos de las fiscalizaciones laborales y previsionales. Lo contable, las facturas y los libros, se guarda seis años, por el SII.
+
+F: ¿Hay alguna otra información del personal? Turnos, control de asistencia...
+
+V: Llevamos un libro de asistencia en papel, que firman al entrar y al salir. No usamos huella digital ni cámaras. Los turnos los armo en una planilla y la pego en la pared de la sala de descanso; ahí sale solo el nombre de pila y el horario.
+
+F: Perfecto. Ahora WhatsApp. Me dijiste que confirmas horas por ahí. ¿Cómo lo usan?
+
+V: Tenemos WhatsApp Business en el celular del local, con el mismo número que sale en la web. La verdad es que es nuestro canal principal, más que el correo. Por ahí la gente pregunta precios, si hay hora, si podemos cortar a un perro que muerde... de todo. También nos mandan fotos del perro para que veamos el pelo y les podamos dar un precio más exacto, porque el precio depende del tamaño y del tipo de pelo.
+
+F: ¿Se puede reservar por WhatsApp?
+
+V: Preferimos que reserven en la web, porque ahí quedan todos los datos completos y la casilla de mayor de edad. Así que si alguien nuevo pide hora por WhatsApp, le mandamos el link. Si es un cliente de siempre que quiere cambiar la hora o repetir el servicio, lo coordinamos ahí mismo. Y hay clientes mayores que no se manejan con la web; con ellos la ingreso yo en el formulario, con los datos que me dan por teléfono, leyéndoles lo que dice cada parte.
+
+F: ¿Quién tiene acceso al WhatsApp?
+
+V: Yo y la asistente de la guardería, que lo usa para mandarles fotos a los dueños durante el día, del perro jugando. Les encanta. Lo tenemos en el celular del local y en WhatsApp Web en el computador de la oficina, que tiene clave. Las peluqueras no lo usan; si necesitan avisarle algo al dueño, me lo dicen a mí.
+
+F: ¿Qué datos quedan en WhatsApp, entonces?
+
+V: El número de teléfono, el nombre que tenga la persona en su WhatsApp, los mensajes, las fotos de los perros y, a veces, la dirección, cuando coordinamos un retiro. Usamos etiquetas como "cliente nuevo", "guardería" o "retiro", para ordenarnos.
+
+F: ¿Y eso cuánto tiempo se guarda?
+
+V: Decidimos borrar los chats que llevan seis meses sin movimiento. Lo hago el primer lunes de cada mes; tengo un recordatorio. Y desactivamos el respaldo automático en la nube, para que no quede una copia dando vueltas por ahí.
+
+F: WhatsApp es de Meta, que es una empresa de Estados Unidos. ¿Lo tenías considerado?
+
+V: Sí, me lo explicaron cuando revisamos el aviso de privacidad. Los mensajes pasan por los servidores de Meta. Por eso no pedimos datos delicados por ahí. El RUT, por ejemplo, no lo pedimos por WhatsApp; eso va en la web.
+
+F: ¿Mandan promociones por WhatsApp?
+
+V: No. Las promociones van solo en el boletín, a quien se inscribió, y ese consentimiento lo maneja Privai. Por WhatsApp solo respondemos consultas y avisamos cosas de la reserva, como "tu perro ya está listo" o "el chofer va llegando".
+
+F: Perfecto. Y lo último, Instagram.
+
+V: Instagram es nuestra vitrina. Publicamos fotos de los perros después del baño o del corte, el clásico antes y después, y en las historias subimos fotos de la guardería. Funciona muy bien: más o menos la mitad de los clientes nuevos llegan por ahí.
+
+F: ¿Cómo manejan la autorización de los dueños?
+
+V: Nunca publicamos un perro sin la autorización del dueño. En la guardería está en la ficha de ingreso, con una casilla. En la peluquería se lo preguntamos cuando recibimos al perro y, si dice que sí, le mandamos un mensaje por WhatsApp para que quede por escrito. Esa conversación la guardamos como captura en una carpeta de autorizaciones en el Drive, porque los chats se borran a los seis meses y la foto sigue publicada.
+
+F: ¿Qué aparece en las publicaciones? ¿Solo el perro?
+
+V: Solo el perro, y su nombre si el dueño quiere. No publicamos la cara de los dueños, ni sus nombres, ni los etiquetamos, salvo que ellos mismos nos pidan que los etiquetemos. Y en el retiro no sacamos fotos en la puerta de la casa, para que no se vea la dirección ni nada que permita ubicarla.
+
+F: ¿Quién saca las fotos y dónde quedan?
+
+V: Las sacan las peluqueras o la asistente, siempre con el celular del local, nunca con el personal. Las fotos se pasan a una carpeta del Drive y se borran del celular cada semana. Las que no se publican se borran del Drive a los tres meses. Las publicadas quedan en Instagram mientras el dueño no pida sacarlas; si lo pide, las sacamos en menos de dos días. La cuenta la administro yo, y una de las peluqueras me ayuda con las historias.
+
+F: ¿Y los mensajes directos de Instagram?
+
+V: Llegan consultas y, a veces, currículums. Las consultas las derivamos al WhatsApp o a la web, y a quienes postulan les pedimos que manden el currículum al correo, para tener todo en un solo lugar y poder borrarlo a los seis meses. Por Instagram no reservamos.
+
+F: Me quedan un par de cosas sueltas. ¿Los proveedores? ¿Comparten datos de clientes con alguien más?
+
+V: Los proveedores son de insumos: shampoo, toallas, los snacks, la mantención de las secadoras y de la mesa hidráulica. Con ellos solo tenemos el contacto del vendedor y las facturas. Datos de clientes, a nadie, salvo lo de la veterinaria que ya te conté. Y los proveedores tecnológicos, claro: Cloudflare, que aloja el sitio, y Privai, por el banner y el centro de privacidad.
+
+F: ¿Y el correo del local?
+
+V: El correo de contacto lo tenemos en Google Workspace. Ahí llegan consultas, algún reclamo, los currículums y las respuestas a las confirmaciones que mandamos. Los reclamos los guardamos hasta que se resuelven y un año más, por si la persona vuelve con el tema. Y una vez al año limpio el resto: lo que tiene más de dos años, se borra. Al correo entramos solo yo y la contadora, que revisa las facturas que llegan ahí.
+
+F: ¿Y las boletas y facturas? ¿Llevan datos de clientes?
+
+V: Emitimos boleta electrónica, que no lleva datos del cliente. Si alguien pide factura, va con los datos de su empresa. Eso queda en el SII y la contadora lo guarda los seis años que te dije.
+
+F: Perfecto, Valentina. Con esto tengo bastante. Déjame resumirte lo que voy a armar, y me corriges si algo no calza. Las actividades serían: la reserva de hora en la web; la comunicación a la veterinaria para la guardería; la ficha de ingreso de la guardería; el retiro a domicilio; la analítica del sitio; la atención de los derechos de las personas; la selección de personal; los contratos y las remuneraciones con la contadora; la atención por WhatsApp; las fotos en Instagram; y el correo, con las consultas y los reclamos. ¿Me falta algo?
+
+V: Creo que no. Bueno, el boletín, pero ese lo maneja Privai, ¿cierto?
+
+F: Sí, el consentimiento del boletín queda registrado en Privai, pero igual lo incluyo como actividad de Lebrel, porque la responsable eres tú. Te voy a mandar el borrador del registro la próxima semana para que lo revises. Lo que más me importa que mires son los plazos de conservación, que estén tal como me los dijiste, y que no se me haya quedado ningún destinatario afuera.
+
+V: Dale. Muchas gracias, Francisca. Me sirvió harto para ordenarme la cabeza, la verdad.
+
+F: Gracias a ti. Corto la grabación.
