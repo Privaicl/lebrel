@@ -162,6 +162,16 @@ describe('derechos: supresión', () => {
     expect((entrega.body as { error: string }).error).toBe('La veterinaria no confirmó el borrado; no se borró nada en Lebrel.')
     expect(await count()).toBe(1)
   })
+  it('fails without deleting when a shared booking cannot be deleted at the vet because its key is missing', async () => {
+    await insertReserva('s1', 'jose@correo.example', '2026-10-25T00:01:00.000Z')
+    await insertReserva('s2', 'jose@correo.example')
+    const f = stubFetch(204)
+
+    const res = await borrar(env.DB, { ...env, VETERINARIA_API_KEY: undefined } as Env, 'jose@correo.example', f.impl)
+    expect(res).toEqual({ ok: false, borrados: { reservas: 0 }, terceros: { veterinaria: ['omitido'] } })
+    expect(f.calls).toHaveLength(0)
+    expect(await count()).toBe(2)
+  })
 })
 
 describe('agente de Privai', () => {
@@ -202,6 +212,12 @@ describe('agente de Privai', () => {
     const fails = p.calls.filter((c) => c.path.endsWith('/fail'))
     expect(fails.map((c) => c.path)).toEqual(['/tasks/rect/fail', '/tasks/sin-correo/fail'])
     expect((fails[0].body as { error: string }).error).toMatch(/rectify/)
+  })
+
+  it('stops quietly when Privai answers without a task list', async () => {
+    const raro = (async (url: string) =>
+      new URL(url).pathname.endsWith('/tasks') ? Response.json({ error: 'x' }) : new Response(null, { status: 200 })) as unknown as typeof fetch
+    await expect(atenderPrivai(conAgente, raro)).resolves.toBeUndefined()
   })
 
   it('stops quietly when Privai is down', async () => {

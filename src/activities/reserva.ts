@@ -118,7 +118,11 @@ export async function handleReserva(c: Context<{ Bindings: Env }>): Promise<Resp
 
   if (debeCompartir(row)) {
     c.executionCtx.waitUntil(
-      compartirConVeterinaria(row, c.env).then((r) => (r === 'enviado' ? markShared(c.env.DB, row.id) : undefined)),
+      compartirConVeterinaria(row, c.env)
+        .then((r) => (r === 'enviado' ? markShared(c.env.DB, row.id) : undefined))
+        .catch((err) => {
+          console.error(JSON.stringify({ evento: 'veterinaria.marca.error', reserva: row.id, mensaje: String(err) }))
+        }),
     )
   }
 
