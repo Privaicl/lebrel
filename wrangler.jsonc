@@ -27,5 +27,9 @@
     // Cada minuto: el agente de derechos ARSOP consulta sus tareas en Privai, ver src/derechos.ts.
     "crons": ["0 7 * * *", "* * * * *"]
   },
+  "routes": [
+    { "pattern": "lebrel.cl", "custom_domain": true },
+    { "pattern": "www.lebrel.cl", "custom_domain": true }
+  ],
   "observability": { "enabled": true }
 }
