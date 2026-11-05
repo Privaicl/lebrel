@@ -15,10 +15,14 @@
     deploymentId: "PENDIENTE_DEPLOYMENT_ID",
     file_config_url: "https://cdn.privai.cl/configs/PENDIENTE_DEPLOYMENT_ID/config.json",
     apiBaseUrl: "https://api.v2.privai.cl",
-    cookieDomain: ".lebrel.cl",
     privacyCenterUrl: "https://privacidad.lebrel.cl",
     language: "es",
   };
+  // En lebrel.cl la cookie del banner se comparte con privacidad.lebrel.cl. En otro host (workers.dev,
+  // localhost) el navegador rechazaría una cookie de .lebrel.cl, así que queda en el host actual.
+  if (location.hostname === "lebrel.cl" || location.hostname.endsWith(".lebrel.cl")) {
+    window.privaiConfig.cookieDomain = ".lebrel.cl";
+  }
 </script>
 <script src="https://cdn.privai.cl/base/widget/cookie-banner.auto.js"></script>
 </head>
@@ -115,6 +119,7 @@
     <div class="full"><label for="r-dir">Dirección <span class="opt">(opcional)</span></label><input id="r-dir" name="direccion" autocomplete="street-address" placeholder="Calle, número y comuna" aria-describedby="r-dir-ayuda"><small class="hint" id="r-dir-ayuda">Solo si pides retiro a domicilio.</small></div>
     <div class="full check"><input id="r-mayor" name="mayor_edad" type="checkbox" value="si"><label for="r-mayor">Declaro ser mayor de 18 años</label></div>
     <div class="hp" aria-hidden="true"><label>No llenar<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+    <p class="full aviso">Usamos tus datos para agendar y prestar el servicio. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.</p>
     <div class="full actions"><button class="btn primary" type="submit">Reservar</button><p class="form-msg" role="status" aria-live="polite"></p></div>
   </form>
 </section>

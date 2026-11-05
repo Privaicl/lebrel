@@ -82,13 +82,16 @@ h2 em{color:var(--gold)}
 .form-card .group{padding-top:14px;border-top:1px solid var(--line);text-transform:uppercase}
 .form-card .group:first-child{padding-top:0;border-top:0}
 .form-card label{font-size:14px;color:var(--mist);display:block;margin-bottom:6px}
-.form-card .opt{color:color-mix(in srgb,var(--mist) 75%,transparent)}
+.form-card .opt{color:var(--mist)}
 .form-card input,.form-card select{width:100%;min-height:48px;background:#fff;border:1px solid color-mix(in srgb,var(--bone) 25%,transparent);
   color:var(--bone);padding:12px 14px;border-radius:10px;font:400 16px "Schibsted Grotesk",system-ui,sans-serif;color-scheme:light}
 .form-card select{appearance:none;padding-right:40px;cursor:pointer;
   background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f5779' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 16px center}
-.form-card input::placeholder{color:color-mix(in srgb,var(--mist) 70%,transparent)}
+.form-card input::placeholder{color:var(--mist)}
 .form-card .hint{display:block;margin-top:6px;font-size:13.5px;color:var(--mist)}
+.form-card .aviso{font-size:13.5px;color:var(--mist)}
+.form-card .aviso a{text-underline-offset:3px}
+.form-card .aviso a:hover{color:var(--signal)}
 .form-card .check{display:flex;align-items:center;gap:12px}
 .form-card .check input{width:22px;min-height:0;height:22px;padding:0;flex:none;accent-color:var(--signal);cursor:pointer}
 .form-card .check label{margin:0;font-size:15px;color:var(--bone);cursor:pointer}

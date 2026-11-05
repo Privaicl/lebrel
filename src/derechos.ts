@@ -52,8 +52,9 @@ export async function recolectar(db: D1Database, correo: string): Promise<Datos>
   return { correo, reservas: filas.results }
 }
 
-// Primero avisa a la veterinaria y solo si responde bien borra aquí. Si falla, no se borra nada
-// y Privai puede reintentar: la operación se puede repetir sin efectos raros.
+// Primero avisa a la veterinaria y solo si confirma borra aquí. Si no confirma (falla, o falta su
+// clave y no se le pudo avisar), la tarea queda fallida en Privai para revisión y puede reintentarse;
+// no se borra nada a medias. La operación se puede repetir sin efectos raros.
 export async function borrar(
   db: D1Database,
   env: Env,
@@ -70,7 +71,7 @@ export async function borrar(
       .filter((s) => s.compartida_veterinaria_at)
       .map((s) => eliminarEnVeterinaria(String(s.id), env, fetchImpl)),
   )
-  if (veterinaria.includes('error')) {
+  if (veterinaria.some((r) => r !== 'enviado')) {
     return { ok: false, borrados: { reservas: 0 }, terceros: { veterinaria } }
   }
 
@@ -115,7 +116,9 @@ export async function atenderPrivai(env: Env, fetchImpl: typeof fetch = fetch): 
     console.log(JSON.stringify({ evento: 'privai.tareas.error', status: res?.status ?? null }))
     return
   }
-  const { items } = (await res.json()) as { items: Tarea[] }
+  // Si Privai responde algo inesperado, no hay tareas que atender.
+  const data = (await res.json().catch(() => null)) as { items?: unknown } | null
+  const items = Array.isArray(data?.items) ? (data.items as Tarea[]) : []
   const nuestras = items.filter((t) => CLAVES.includes(t.node_key)).slice(0, MAX_TAREAS)
 
   for (const t of nuestras) {

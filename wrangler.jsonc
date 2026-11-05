@@ -23,7 +23,7 @@
     "PRIVAI_API_URL": "https://api.privai.cl"
   },
   "triggers": {
-    // 04:00 en Chile (UTC-3): purga de datos vencidos, ver src/retention.ts.
+    // A diario, de madrugada en Chile (07:00 UTC): purga de datos vencidos, ver src/retention.ts.
     // Cada minuto: el agente de derechos ARSOP consulta sus tareas en Privai, ver src/derechos.ts.
     "crons": ["0 7 * * *", "* * * * *"]
   },

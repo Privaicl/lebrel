@@ -41,4 +41,28 @@ describe('página', () => {
     for (const texto of [MSG.falta, MSG.rut, MSG.correo, MSG.vacunas, MSG.mayor_edad]) expect(js).toContain(texto)
     expect(js).toContain("wire(document.getElementById('f-reserva')")
   })
+
+  it('el formulario de reserva explica para qué usamos los datos y enlaza el centro de privacidad', async () => {
+    const html = await get('/')
+    const form = html.match(/<form[^>]*id="f-reserva"[\s\S]*?<\/form>/)?.[0] ?? ''
+    expect(form).toContain(
+      'Usamos tus datos para agendar y prestar el servicio. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.',
+    )
+  })
+
+  it('el banner usa la cookie de .lebrel.cl solo en lebrel.cl y sus subdominios', async () => {
+    const html = await get('/')
+    const script = html.match(/<script>([\s\S]*?window\.privaiConfig[\s\S]*?)<\/script>/)?.[1] ?? ''
+    const config = (hostname: string) => {
+      const window: { privaiConfig?: Record<string, unknown> } = {}
+      new Function('window', 'location', script)(window, { hostname })
+      return window.privaiConfig ?? {}
+    }
+    expect(config('lebrel.cl').cookieDomain).toBe('.lebrel.cl')
+    expect(config('www.lebrel.cl').cookieDomain).toBe('.lebrel.cl')
+    for (const host of ['lebrel.privai-demo.workers.dev', 'localhost', 'notlebrel.cl']) {
+      expect(config(host)).not.toHaveProperty('cookieDomain')
+    }
+    expect(config('lebrel.cl').deploymentId).toBe('PENDIENTE_DEPLOYMENT_ID')
+  })
 })

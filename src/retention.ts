@@ -1,4 +1,4 @@
-// Plazos de conservación. El cron diario (wrangler.jsonc, 04:00 en Chile) borra lo vencido.
+// Plazos de conservación. El cron diario (wrangler.jsonc, de madrugada, 07:00 UTC) borra lo vencido.
 export const RETENCION: ReadonlyArray<{ tabla: 'reservas' | 'visitas'; meses: number }> = [
   { tabla: 'reservas', meses: 24 },
   { tabla: 'visitas', meses: 13 },

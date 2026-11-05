@@ -30,8 +30,14 @@ describe('form origin check', () => {
     expect(res.status).toBe(403)
   })
 
-  it('POST /api/collect needs neither', async () => {
-    const res = await SELF.fetch('https://lebrel.cl/api/collect', { method: 'POST', body: '{}' })
+  it('POST /api/collect needs an allowed origin but no lb_session', async () => {
+    const res = await SELF.fetch('https://lebrel.cl/api/collect', {
+      method: 'POST',
+      headers: { origin: 'https://lebrel.cl' },
+      body: '{}',
+    })
     expect(res.status).not.toBe(403)
+    const sinOrigen = await SELF.fetch('https://lebrel.cl/api/collect', { method: 'POST', body: '{}' })
+    expect(sinOrigen.status).toBe(403)
   })
 })

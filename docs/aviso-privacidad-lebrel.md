@@ -24,13 +24,13 @@ Las personas cuyos datos tratamos son: los clientes que envían una Reserva de h
 
 **Solicitudes de derechos dirigidas a Lebrel:** Cuando usted ejerce sus derechos en nuestro Centro de Privacidad (privacidad.lebrel.cl), Privai registra por cuenta nuestra su nombre, correo electrónico, el tipo de solicitud, su contenido, los datos usados para verificar su identidad y nuestra respuesta. La verificación se hace con códigos de un solo uso enviados a su correo, que nunca se guardan en texto plano.
 
-**Consentimientos gestionados en Privai:** Si nos autoriza a enviarle el Boletín de novedades y promociones de Lebrel, ese consentimiento lo registra y gestiona Privai por cuenta nuestra. lebrel.cl no guarda suscriptores.
+**Consentimientos gestionados en Privai:** Si nos autoriza a enviarle el Boletín de novedades y promociones de Lebrel, Privai registra y gestiona ese consentimiento por cuenta nuestra, junto con su nombre y su correo electrónico, que conserva mientras usted esté suscrito. lebrel.cl no guarda suscriptores.
 
 ### Datos personales que recopilamos automáticamente
 
 **Cookie de sesión (`lb_session`, esencial):** Un identificador aleatorio que solo sirve para comprobar que los formularios se envían desde nuestra propia página. No lo guardamos en nuestros servidores, no lo asociamos a usted y se borra al cerrar el navegador.
 
-**Analítica del sitio (`lb_vid`, no esencial):** Solo si usted acepta la categoría "Analítica" en el banner de cookies, creamos un identificador aleatorio del visitante y registramos por cada visita la sección vista, el sitio desde el que llegó y el navegador que usa. No registramos su nombre, correo ni dirección IP, y no cruzamos estas visitas con las Reservas de hora. Si no acepta, el código de analítica no se carga.
+**Analítica del sitio (`lb_vid`, no esencial):** Solo si usted acepta la categoría "Analítica" en el banner de cookies, creamos un identificador aleatorio del visitante y registramos, una vez por cada carga de página, la página y la sección en la que llega (por ejemplo, `#servicios`), el sitio desde el que llegó y el navegador que usa. No registramos las secciones que recorre después, ni su nombre, correo o dirección IP, y no cruzamos estas visitas con las Reservas de hora. Si no acepta, el código de analítica no se carga.
 
 **Registro de consentimiento de cookies:** El banner de cookies, provisto por Privai, guarda un registro de su decisión: un identificador aleatorio del visitante, el navegador, la fecha y las categorías aceptadas o rechazadas. No incluye nombre, correo ni dirección IP.
 
@@ -48,7 +48,7 @@ Utilizamos sus datos personales para las siguientes finalidades, conforme a las 
 
 - **Agendar y prestar el servicio que reserva:** confirmarle la hora, atender a su perro y, si lo pide, retirarlo y devolverlo en su domicilio. Su RUT nos permite identificarlo como cliente; su teléfono y su correo, confirmar la hora; su dirección, ir a buscar y devolver a su perro. En la guardería, la Clínica Veterinaria Los Aromos SpA confirma que las vacunas del perro estén al día, para cuidar a todo el grupo.
 - **Comprobar que quien reserva es mayor de edad**, mediante la declaración que marca en el formulario.
-- **Obtener estadísticas de uso del sitio:** saber qué secciones se visitan y desde dónde llegan las personas, solo si usted lo consiente.
+- **Obtener estadísticas de uso del sitio:** saber cuántas visitas recibe el sitio, en qué página y sección entran y desde dónde llegan las personas, solo si usted lo consiente.
 - **Proteger los formularios:** comprobar que se envían desde nuestra página y filtrar envíos automatizados.
 - **Atender sus solicitudes de derechos:** verificar su identidad, reunir o eliminar sus datos y conservar evidencia de la respuesta.
 - **Registrar sus decisiones sobre cookies y sus consentimientos**, para respetarlas y poder acreditarlas.
@@ -114,7 +114,7 @@ Para ejercer sus derechos, usted o un representante autorizado puede presentar s
 Las solicitudes se vinculan a sus datos mediante su correo electrónico:
 
 - **Acceso:** le entregamos todas las Reservas de hora asociadas a su correo, con todos los datos tal como están guardados.
-- **Supresión:** si alguna de sus reservas de guardería se compartió con la Clínica Veterinaria Los Aromos SpA, primero le pedimos que elimine la confirmación que le enviamos y, cuando lo confirma o nos indica que ya no la tiene, borramos sus Reservas de hora. Las reservas que nunca se compartieron con la veterinaria, como un baño, se borran sin consultarla. Si la veterinaria no lo confirma, no borramos nada parcialmente y revisamos el caso antes de responderle.
+- **Supresión:** si alguna de sus reservas de guardería se compartió con la Clínica Veterinaria Los Aromos SpA, primero le pedimos que elimine la confirmación que le enviamos y, cuando lo confirma o nos indica que ya no la tiene, borramos sus Reservas de hora. Las reservas que nunca se compartieron con la veterinaria, como un baño, se borran sin consultarla. Si la veterinaria no lo confirma, la tarea queda fallida en Privai para revisión y puede reintentarse; no se borra nada a medias. Revisamos el caso antes de responderle.
 - **Analítica del sitio:** las visitas solo están asociadas al identificador aleatorio de la cookie `lb_vid` y no podemos vincularlas a su correo. Para dejar de generarlas, revoque su consentimiento o borre la cookie.
 
 Si su solicitud es denegada total o parcialmente, o no recibe respuesta en el plazo indicado, puede reclamar ante la Agencia de Protección de Datos Personales de Chile dentro de los 30 días hábiles siguientes.
@@ -138,7 +138,7 @@ Cuando utiliza nuestros Servicios, sus datos personales pueden ser transferidos 
 **Privai (Nickel Technologies SPA), encargado**
 
 - **País de destino:** empresa chilena; datos alojados en la Unión Europea por sus subencargados (Cloudflare y Supabase, empresas de Estados Unidos), que Lebrel autorizó por escrito (Art. 15 bis).
-- **Datos transferidos:** registro de consentimientos de cookies y del Boletín; solicitudes de derechos y su respuesta; correos de verificación.
+- **Datos transferidos:** registro de consentimientos de cookies y del Boletín; nombre y correo de los suscriptores del Boletín; solicitudes de derechos y su respuesta; correos de verificación.
 - **Garantía:** cláusulas contractuales.
 
 La Clínica Veterinaria Los Aromos SpA es una empresa sujeta a la ley chilena, por lo que esa comunicación no constituye una transferencia internacional por parte de Lebrel.
@@ -151,7 +151,7 @@ Conforme a los artículos 27 y 28 de la Ley 21.719, las transferencias internaci
 
 ### Retención
 
-Peluquería Canina Lebrel SpA conserva sus datos personales durante el tiempo necesario para cumplir las finalidades descritas en este Aviso y según lo exija la ley. Un proceso automático revisa los plazos todos los días a las 04:00 (hora de Chile) y elimina lo vencido.
+Peluquería Canina Lebrel SpA conserva sus datos personales durante el tiempo necesario para cumplir las finalidades descritas en este Aviso y según lo exija la ley. Un proceso automático revisa los plazos a diario, de madrugada (07:00 UTC), y elimina lo vencido.
 
 **Reservas de hora:** 24 meses desde el envío, o antes si usted pide la supresión. Las usamos para agendar y prestar el servicio que reservó.
 
@@ -159,7 +159,9 @@ Peluquería Canina Lebrel SpA conserva sus datos personales durante el tiempo ne
 
 **Cookie de sesión `lb_session`:** hasta que cierre el navegador; no se guarda en nuestros servidores. Sirve para proteger los formularios.
 
-**Registros de consentimiento de cookies y del Boletín:** 4 años desde cada registro, el plazo de prescripción de la ley, como evidencia de cumplimiento. No contienen nombre ni IP.
+**Registros de consentimiento de cookies:** 4 años desde cada registro, el plazo de prescripción de la ley, como evidencia de cumplimiento. No contienen nombre ni IP.
+
+**Boletín de novedades y promociones:** Privai, por cuenta nuestra, conserva su nombre y su correo electrónico mientras usted esté suscrito. El registro de su consentimiento, y de su revocación si la hay, se conserva 4 años desde cada registro, el plazo de prescripción de la ley, como evidencia de cumplimiento.
 
 **Solicitudes de derechos dirigidas a Lebrel:** mientras dure el caso y 4 años más, el plazo de prescripción de la ley, como evidencia de cumplimiento y para la defensa ante reclamos.
 
@@ -169,7 +171,7 @@ Cuando los datos personales ya no sean necesarios, se procederá a su eliminaci�
 
 ### Información agregada o anonimizada
 
-Podremos tratar datos de forma agregada o anonimizada, por ejemplo el número de visitas por sección. Esta información no permite identificar personas individuales.
+Podremos tratar datos de forma agregada o anonimizada, por ejemplo el número de visitas por página o sección de llegada. Esta información no permite identificar personas individuales.
 
 ### Medidas de seguridad
 
@@ -181,7 +183,7 @@ Implementamos medidas técnicas y organizativas apropiadas al riesgo, conforme a
 
 **Minimización:** Pedimos solo los datos que usa el servicio, y la dirección solo cuando pide retiro a domicilio. A la veterinaria le enviamos solo las reservas de guardería y solo lo necesario para confirmar las vacunas, sin su correo ni su dirección. La analítica no registra su nombre, correo ni dirección IP, y los registros técnicos usan identificadores internos en vez de sus datos.
 
-**Integridad en los derechos:** Una supresión solo se ejecuta cuando la veterinaria confirma que eliminó su copia o que ya no la tiene; si no, no se borra nada parcialmente y el caso queda para revisión. El Centro de Privacidad verifica su identidad antes de entregar o borrar datos.
+**Integridad en los derechos:** Una supresión solo se ejecuta cuando la veterinaria confirma que eliminó su copia o que ya no la tiene; si no, la tarea queda fallida en Privai para revisión y puede reintentarse; no se borra nada a medias. El Centro de Privacidad verifica su identidad antes de entregar o borrar datos.
 
 **Gestión de incidentes:** Ante una vulneración de seguridad que afecte datos personales, la reportaremos a la Agencia de Protección de Datos Personales sin dilaciones indebidas y a más tardar dentro de las 72 horas siguientes a tomar conocimiento de ella, conforme al artículo 14 sexies, y, cuando corresponda, a los titulares afectados.
 
@@ -195,7 +197,7 @@ Si usted tiene conocimiento de que un menor envió una Reserva de hora, escríba
 
 ## 8. Cambios a este Aviso de Privacidad
 
-Peluquería Canina Lebrel SpA podrá actualizar este Aviso de Privacidad periódicamente. Publicaremos los cambios materiales en lebrel.cl y actualizaremos la Fecha de Vigencia en la parte superior de este documento. Si un cambio afecta un tratamiento basado en su consentimiento, se lo volveremos a pedir.
+Peluquería Canina Lebrel SpA podrá actualizar este Aviso de Privacidad periódicamente. Publicaremos los cambios materiales en lebrel.cl y cambiaremos la fecha de actualización que aparece en la parte superior de este documento. Si un cambio afecta un tratamiento basado en su consentimiento, se lo volveremos a pedir.
 
 ## 9. Información de Contacto
 

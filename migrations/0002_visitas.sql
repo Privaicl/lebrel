@@ -1,5 +1,5 @@
 -- Visitas al sitio de Lebrel (analítica propia, solo con consentimiento).
--- Finalidad: estadísticas de uso del sitio (qué secciones se visitan y desde dónde llegan).
+-- Finalidad: estadísticas de uso del sitio (en qué página y sección entran y desde dónde llegan).
 -- Datos: identificador aleatorio del visitante (cookie lb_vid), ruta, sitio de origen y navegador.
 -- Conservación: 13 meses (ver src/retention.ts). Destinatarios: ninguno.
 CREATE TABLE visitas (
