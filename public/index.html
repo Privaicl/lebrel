@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lebrel · Peluquería y guardería canina en Ñuñoa</title>
+<meta name="description" content="Baño, corte y guardería por el día para tu perro en Ñuñoa. Reserva tu hora en línea; si no puedes venir, lo buscamos y te lo devolvemos.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+
+<header class="hero" id="top">
+  <nav>
+    <a class="brand" href="#top">Lebrel</a>
+    <span class="links"><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a></span>
+  </nav>
+  <div class="hero-copy">
+    <span class="mono kicker">Peluquería y guardería canina · Ñuñoa</span>
+    <h1>Tu perro, bañado, peinado y feliz. <em>A dos cuadras de tu casa.</em></h1>
+    <p class="lede">Baño, corte y guardería por el día, con hora reservada y sin apuros. Si no alcanzas a venir, lo buscamos y te lo devolvemos listo.</p>
+    <div class="cta"><a class="btn primary" href="#reservar">Reservar hora</a><a class="btn ghost" href="#servicios">Ver servicios</a></div>
+    <p class="hero-meta mono"><span>Lunes a sábado · 9:00 a 19:00</span> · <span>Calle Los Aromos 0</span></p>
+  </div>
+  <div class="hero-img">
+    <img src="/img/hero-borzoi.jpg" alt="Borzoi de pelo blanco y gris, recién cepillado, mirando hacia un lado" width="1600" height="1277" fetchpriority="high">
+  </div>
+</header>
+
+<main>
+<section id="servicios">
+  <div class="section-head">
+    <span class="mono kicker">Servicios</span>
+    <h2>Cuatro servicios, <em>el mismo cuidado.</em></h2>
+    <p class="intro">Precios de referencia para un perro mediano. Te confirmamos el valor final según el tamaño y el tipo de pelo.</p>
+  </div>
+  <ul class="servicios">
+    <li>
+      <img src="/img/servicio-bano.jpg" alt="Perro pequeño de pelo blanco recibiendo un baño con agua tibia" width="799" height="531" loading="lazy">
+      <div class="servicio-body">
+        <h3>Baño</h3>
+        <p>Shampoo suave según su piel, secado a mano y cepillado. Sale oliendo a limpio.</p>
+        <p class="precio"><span class="mono">Desde</span> $15.000</p>
+      </div>
+    </li>
+    <li>
+      <img src="/img/servicio-corte.jpg" alt="Perro blanco de pelo largo sobre la mesa de peluquería, antes del corte" width="640" height="640" loading="lazy">
+      <div class="servicio-body">
+        <h3>Baño y corte</h3>
+        <p>Todo lo del baño, más corte a tijera o máquina, uñas y limpieza de oídos.</p>
+        <p class="precio"><span class="mono">Desde</span> $22.000</p>
+      </div>
+    </li>
+    <li>
+      <img src="/img/servicio-guarderia.jpg" alt="Dos perros jugando sobre el pasto" width="1600" height="1127" loading="lazy">
+      <div class="servicio-body">
+        <h3>Guardería por el día</h3>
+        <p>Juego, paseo y siesta en grupos chicos, de 9:00 a 19:00. Con las vacunas al día.</p>
+        <p class="precio"><span class="mono">Desde</span> $18.000</p>
+      </div>
+    </li>
+    <li>
+      <img src="/img/servicio-retiro.jpg" alt="Beagle con arnés sentado en el auto, mirando por la ventana" width="1600" height="1200" loading="lazy">
+      <div class="servicio-body">
+        <h3>Retiro y entrega a domicilio</h3>
+        <p>Lo buscamos en tu casa y te lo devolvemos listo. Se suma a cualquier servicio.</p>
+        <p class="precio"><span class="mono">Desde</span> $5.000</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section id="reservar" class="reservar">
+  <div class="reservar-intro">
+    <span class="mono kicker">Reservar hora</span>
+    <h2>Elige el día. <em>Nosotros te llamamos.</em></h2>
+    <p class="intro">Completa el formulario y te contactamos para confirmar la hora exacta.</p>
+    <ol class="pasos">
+      <li><span>1</span>Eliges el servicio y el día que te acomoda.</li>
+      <li><span>2</span>Te confirmamos la hora por teléfono o por correo.</li>
+      <li><span>3</span>Lo traes, o lo pasamos a buscar si pediste retiro.</li>
+    </ol>
+    <p class="nota">Para la guardería pedimos las vacunas al día: así cuidamos a todo el grupo.</p>
+  </div>
+  <form class="form-card" id="f-reserva" method="post" action="/api/reserva" novalidate>
+    <p class="group full mono">Tus datos</p>
+    <div><label for="r-nombre">Nombre y apellido</label><input id="r-nombre" name="nombre" required autocomplete="name" placeholder="Nombre Apellido"></div>
+    <div><label for="r-rut">RUT</label><input id="r-rut" name="rut" required placeholder="11.111.111-1"></div>
+    <div><label for="r-correo">Correo</label><input id="r-correo" name="correo" type="email" required autocomplete="email" placeholder="nombre@correo.example"></div>
+    <div><label for="r-tel">Teléfono</label><input id="r-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+56 9 0000 0000"></div>
+
+    <p class="group full mono">Tu perro</p>
+    <div><label for="r-perro">Nombre del perro</label><input id="r-perro" name="perro_nombre" required placeholder="Ej.: Canela"></div>
+    <div><label for="r-raza">Raza</label><input id="r-raza" name="perro_raza" required placeholder="Ej.: quiltro, galgo, poodle"></div>
+
+    <p class="group full mono">La reserva</p>
+    <div><label for="r-servicio">Servicio</label><select id="r-servicio" name="servicio" required><option value="" disabled selected>Elige un servicio</option><option value="bano">Baño</option><option value="bano_corte">Baño y corte</option><option value="guarderia">Guardería por el día</option></select></div>
+    <div><label for="r-fecha">Fecha</label><input id="r-fecha" name="fecha" type="date" required></div>
+    <div><label for="r-vacunas">¿Vacunas al día?</label><select id="r-vacunas" name="vacunas" required><option value="" disabled selected>Elige una opción</option><option value="si">Sí</option><option value="no">No</option></select></div>
+    <div><label for="r-retiro">¿Retiro a domicilio?</label><select id="r-retiro" name="retiro" required><option value="" disabled selected>Elige una opción</option><option value="si">Sí</option><option value="no">No</option></select></div>
+    <div class="full"><label for="r-dir">Dirección <span class="opt">(opcional)</span></label><input id="r-dir" name="direccion" autocomplete="street-address" placeholder="Calle, número y comuna" aria-describedby="r-dir-ayuda"><small class="hint" id="r-dir-ayuda">Solo si pides retiro a domicilio.</small></div>
+    <div class="full check"><input id="r-mayor" name="mayor_edad" type="checkbox" value="si"><label for="r-mayor">Declaro ser mayor de 18 años</label></div>
+    <div class="hp" aria-hidden="true"><label>No llenar<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+    <div class="full actions"><button class="btn primary" type="submit">Reservar</button><p class="form-msg" role="status" aria-live="polite"></p></div>
+  </form>
+</section>
+
+<section id="contacto" class="contacto">
+  <div class="section-head">
+    <span class="mono kicker">Contacto</span>
+    <h2>Pasa a vernos, <em>o escríbenos.</em></h2>
+  </div>
+  <dl class="datos">
+    <div><dt class="mono">Dirección</dt><dd>Calle Los Aromos 0<br>Ñuñoa, Santiago</dd></div>
+    <div><dt class="mono">Horario</dt><dd>Lunes a sábado<br>9:00 a 19:00</dd></div>
+    <div><dt class="mono">Teléfono</dt><dd><a href="tel:+56220000000">+56 2 2000 0000</a></dd></div>
+    <div><dt class="mono">Correo</dt><dd><a href="mailto:hola@lebrel.cl">hola@lebrel.cl</a></dd></div>
+  </dl>
+</section>
+</main>
+
+<footer>
+  <div class="footer-id">
+    <a class="brand" href="#top">Lebrel</a>
+    <span>Peluquería Canina Lebrel SpA · RUT 77.123.456-9</span>
+  </div>
+  <span class="fict">Sitio ficticio de demostración — no ingreses datos reales.</span>
+</footer>
+<p class="credits">Fotos vía Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Kobold_(my_first_Explore_photo)_-_Flickr_-_Ferlinka_Borzoi_(Deb_West).jpg">«Kobold», Deb West</a> (CC BY 2.0); <a href="https://commons.wikimedia.org/wiki/File:Washing_a_dog_in_a_bath_tub.jpg">Andrew Vargas</a> (CC BY 2.0); <a href="https://commons.wikimedia.org/wiki/File:White_dog_being_groomed_on_table.jpg">Pedrobaba1</a> (CC BY-SA 4.0); <a href="https://commons.wikimedia.org/wiki/File:Dogs_playing_002.jpg">Sardaka</a> (CC BY-SA 4.0); <a href="https://commons.wikimedia.org/wiki/File:A_Beagle_sitting_in_a_car_looking_outside_the_window.jpg">Slyronit</a> (CC BY-SA 4.0).</p>
+
+<script src="/js/site.js" defer></script>
+</body>
+</html>

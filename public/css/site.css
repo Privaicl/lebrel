@@ -1,0 +1,154 @@
+/* Lebrel · estilo "Ultravioleta": fondo lavanda pálido, tinta violeta y acento ciruela. Siempre claro. */
+:root{
+  --void:#f2eff8; --deep:#e6e0f2; --panel:#fbf9fe; --bone:#211a3a; --mist:#5f5779;
+  --signal:#6236c9; --gold:#9b3a6c;
+  --line:color-mix(in srgb,var(--bone) 14%,transparent);
+  --err:#b3261e;
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--void);color:var(--bone);font:400 17px/1.6 "Schibsted Grotesk",system-ui,sans-serif}
+img{max-width:100%;height:auto}
+a{color:inherit}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--signal)}
+.kicker{display:block;margin-bottom:14px;text-transform:uppercase}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+/* Botones */
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;border:0;font:600 15px "Schibsted Grotesk",system-ui,sans-serif;
+  text-decoration:none;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
+.btn.primary{background:var(--bone);color:var(--void)}
+.btn.primary:hover{background:var(--signal)}
+.btn.ghost{border:1px solid color-mix(in srgb,var(--bone) 35%,transparent);color:var(--bone)}
+.btn.ghost:hover{border-color:var(--bone)}
+.btn:disabled{opacity:.6;cursor:progress}
+
+/* Nav */
+nav{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:22px 5vw}
+.brand{font:italic 500 26px/1 "Cormorant Garamond",Georgia,serif;color:var(--bone);text-decoration:none}
+nav .links{display:flex;gap:28px;font-size:15px;color:var(--mist);align-items:center}
+nav .links a{text-decoration:none}
+nav .links a:not(.btn):hover,nav .links a:not(.btn):focus-visible{color:var(--bone)}
+nav .btn{padding:8px 16px;font-size:13px}
+
+/* Portada */
+.hero{position:relative;min-height:92vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2vw;overflow:hidden;
+  background:radial-gradient(ellipse 55% 70% at 72% 45%,#e2d9f5 0%,var(--void) 70%)}
+.hero-copy{position:relative;z-index:2;padding:120px 0 80px 5vw}
+.hero h1{font:400 clamp(44px,5vw,76px)/1.04 "Cormorant Garamond",Georgia,serif;letter-spacing:-.01em;margin:0 0 24px;max-width:11em}
+.hero h1 em{color:var(--gold)}
+.lede{max-width:30em;color:var(--mist);font-size:18px}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.hero-meta{margin-top:28px;color:var(--mist)}
+.hero-meta span{white-space:nowrap}
+/* Marco redondo de la foto */
+.hero-img{position:relative;aspect-ratio:1;align-self:center;justify-self:end;width:min(88%,68vh);margin:100px 6vw 6vh 0}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 30%;border-radius:50%;background:#0a0716;
+  box-shadow:0 0 0 12px var(--deep),0 0 0 13px color-mix(in srgb,var(--signal) 40%,transparent),0 40px 80px -30px #211a3a88;
+  filter:grayscale(.2) contrast(1.05)}
+
+/* Secciones */
+section{padding:120px 5vw;position:relative}
+h2{font:400 clamp(36px,3.6vw,56px)/1.08 "Cormorant Garamond",Georgia,serif;max-width:18em}
+h2 em{color:var(--gold)}
+.intro{color:var(--mist);max-width:34em;margin-top:16px}
+.section-head{margin-bottom:56px}
+
+/* Servicios */
+.servicios{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.servicios li{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.servicios img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.servicio-body{display:flex;flex-direction:column;flex:1;padding:22px 22px 24px}
+.servicios h3{font:500 27px/1.15 "Cormorant Garamond",Georgia,serif;margin-bottom:8px}
+.servicios p{color:var(--mist);font-size:15.5px}
+.servicios .precio{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:10px;
+  font:600 26px/1 "Cormorant Garamond",Georgia,serif;color:var(--gold);font-variant-numeric:lining-nums}
+.servicios .precio .mono{font-size:11.5px;font-weight:400;text-transform:uppercase;color:var(--mist)}
+.servicio-body p:not(.precio){margin-bottom:18px}
+
+/* Reservar */
+.reservar{display:grid;grid-template-columns:5fr 7fr;gap:6vw;align-items:start;background:var(--deep)}
+.reservar-intro{position:sticky;top:40px}
+.pasos{list-style:none;padding:0;margin-top:36px;border-top:1px solid var(--line)}
+.pasos li{display:flex;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);color:var(--bone)}
+.pasos li span{font:italic 500 22px/1.2 "Cormorant Garamond",Georgia,serif;color:var(--gold);min-width:1.2em}
+.nota{margin-top:24px;color:var(--mist);font-size:15px;max-width:30em}
+
+.form-card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:40px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;box-shadow:0 30px 60px -40px #211a3a55}
+.form-card .full{grid-column:1/-1}
+.form-card .group{padding-top:14px;border-top:1px solid var(--line);text-transform:uppercase}
+.form-card .group:first-child{padding-top:0;border-top:0}
+.form-card label{font-size:14px;color:var(--mist);display:block;margin-bottom:6px}
+.form-card .opt{color:color-mix(in srgb,var(--mist) 75%,transparent)}
+.form-card input,.form-card select{width:100%;min-height:48px;background:#fff;border:1px solid color-mix(in srgb,var(--bone) 25%,transparent);
+  color:var(--bone);padding:12px 14px;border-radius:10px;font:400 16px "Schibsted Grotesk",system-ui,sans-serif;color-scheme:light}
+.form-card select{appearance:none;padding-right:40px;cursor:pointer;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f5779' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 16px center}
+.form-card input::placeholder{color:color-mix(in srgb,var(--mist) 70%,transparent)}
+.form-card .hint{display:block;margin-top:6px;font-size:13.5px;color:var(--mist)}
+.form-card .check{display:flex;align-items:center;gap:12px}
+.form-card .check input{width:22px;min-height:0;height:22px;padding:0;flex:none;accent-color:var(--signal);cursor:pointer}
+.form-card .check label{margin:0;font-size:15px;color:var(--bone);cursor:pointer}
+.form-card .actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:8px}
+.form-card .actions .btn{padding:14px 34px}
+.form-msg{min-height:1.4em;font-size:15px;flex:1 1 16em}
+.form-msg.ok{color:var(--signal);font-weight:500}
+.form-msg.err{color:var(--err)}
+.bad{border-color:var(--err) !important;box-shadow:0 0 0 1px var(--err)}
+.check .bad{outline:2px solid var(--err);outline-offset:2px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done input,.done select,.done button{opacity:.45;pointer-events:none}
+
+/* Contacto */
+.datos{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.datos div{padding:26px 24px 8px 0}
+.datos div + div{padding-left:24px;border-left:1px solid var(--line)}
+.datos dt{text-transform:uppercase;margin-bottom:10px}
+.datos dd{margin:0;font:400 25px/1.3 "Cormorant Garamond",Georgia,serif;font-variant-numeric:lining-nums}
+.datos a{text-decoration-color:color-mix(in srgb,var(--signal) 45%,transparent);text-underline-offset:4px}
+.datos a:hover{color:var(--signal)}
+
+/* Pie */
+footer{padding:40px 5vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px 28px;color:var(--mist);font-size:14px}
+.footer-id{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 18px}
+.footer-id .brand{font-size:22px}
+footer .fict{color:var(--gold)}
+.credits{padding:0 5vw 40px;font-size:13px;color:var(--mist)}
+.credits a{text-underline-offset:3px}
+
+/* Tablet */
+@media (max-width:1100px){
+  .servicios{grid-template-columns:repeat(2,1fr)}
+  .reservar{grid-template-columns:1fr;gap:48px}
+  .reservar-intro{position:static}
+  .datos{grid-template-columns:repeat(2,1fr)}
+  .datos div:nth-child(3){padding-left:0;border-left:0}
+  .datos div:nth-child(n+3){border-top:1px solid var(--line);margin-top:18px}
+}
+
+/* Celular */
+@media (max-width:860px){
+  body{font-size:16px}
+  nav{padding:18px 16px}
+  nav .links{gap:16px}
+  nav .links a:not([href="#reservar"]):not(.btn){display:none}
+  .hero{grid-template-columns:1fr;min-height:auto;gap:0}
+  .hero-img{order:-1;justify-self:center;width:min(86vw,60vh);margin:84px auto 24px}
+  .hero-copy{padding:8px 16px 64px}
+  .lede{font-size:17px}
+  section{padding:80px 16px}
+  .section-head{margin-bottom:36px}
+  .form-card{padding:24px 20px}
+  footer{flex-direction:column;align-items:flex-start;padding:36px 16px}
+  .credits{padding:0 16px 40px}
+}
+@media (max-width:620px){
+  .servicios{grid-template-columns:1fr}
+  .form-card{grid-template-columns:1fr}
+  .datos{grid-template-columns:1fr}
+  .datos div,.datos div + div{padding:20px 0 4px;border-left:0;margin-top:0}
+  .datos div + div{border-top:1px solid var(--line)}
+}
