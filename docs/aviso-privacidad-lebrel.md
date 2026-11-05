@@ -114,7 +114,7 @@ Para ejercer sus derechos, usted o un representante autorizado puede presentar s
 Las solicitudes se vinculan a sus datos mediante su correo electrónico:
 
 - **Acceso:** le entregamos todas las Reservas de hora asociadas a su correo, con todos los datos tal como están guardados.
-- **Supresión:** si alguna de sus reservas de guardería se compartió con la Clínica Veterinaria Los Aromos SpA, primero le pedimos que elimine la confirmación que le enviamos y, cuando lo confirma, borramos sus Reservas de hora. Las reservas que nunca se compartieron con la veterinaria, como un baño, se borran sin consultarla. Si la veterinaria no lo confirma, no borramos nada parcialmente y revisamos el caso antes de responderle.
+- **Supresión:** si alguna de sus reservas de guardería se compartió con la Clínica Veterinaria Los Aromos SpA, primero le pedimos que elimine la confirmación que le enviamos y, cuando lo confirma o nos indica que ya no la tiene, borramos sus Reservas de hora. Las reservas que nunca se compartieron con la veterinaria, como un baño, se borran sin consultarla. Si la veterinaria no lo confirma, no borramos nada parcialmente y revisamos el caso antes de responderle.
 - **Analítica del sitio:** las visitas solo están asociadas al identificador aleatorio de la cookie `lb_vid` y no podemos vincularlas a su correo. Para dejar de generarlas, revoque su consentimiento o borre la cookie.
 
 Si su solicitud es denegada total o parcialmente, o no recibe respuesta en el plazo indicado, puede reclamar ante la Agencia de Protección de Datos Personales de Chile dentro de los 30 días hábiles siguientes.
