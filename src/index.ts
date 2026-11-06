@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { handleCollect } from './activities/analitica'
+import { handlePostulacion } from './activities/postulacion'
 import { handleReserva } from './activities/reserva'
 import { CRON_PRIVAI, atenderPrivai } from './derechos'
 import type { Env } from './env'
@@ -32,6 +33,7 @@ app.use('/api/*', async (c, next) => {
 })
 
 app.post('/api/reserva', handleReserva)
+app.post('/api/postulacion', handlePostulacion)
 app.post('/api/collect', handleCollect)
 
 export default {

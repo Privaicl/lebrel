@@ -18,6 +18,17 @@ async function insertReserva(id: string, correo: string, compartida: string | nu
     .run()
 }
 
+async function insertPostulacion(id: string, correo: string) {
+  await env.DB.prepare(
+    `INSERT INTO postulaciones (id, nombre, correo, telefono, comuna, experiencia_anios, experiencia, created_at)
+     VALUES (?, 'José Peña', ?, '+56911111111', 'Ñuñoa', 4, 'Peluquería canina', '2026-10-26T00:00:00.000Z')`,
+  )
+    .bind(id, correo)
+    .run()
+}
+const countPost = async () =>
+  (await env.DB.prepare('SELECT count(*) AS n FROM postulaciones').first<{ n: number }>())?.n
+
 function stubFetch(status: number) {
   const calls: { url: string; method?: string }[] = []
   const impl = (async (url: string, init: RequestInit) => {
@@ -56,7 +67,7 @@ const tarea = (t: Partial<Tarea>): Tarea => ({
 })
 
 beforeEach(async () => {
-  await env.DB.exec('DELETE FROM reservas')
+  await env.DB.exec('DELETE FROM reservas; DELETE FROM postulaciones')
 })
 
 describe('derechos: acceso', () => {
@@ -66,6 +77,7 @@ describe('derechos: acceso', () => {
 
     expect(await recolectar(env.DB, 'jose@correo.example')).toEqual({
       correo: 'jose@correo.example',
+      postulaciones: [],
       reservas: [
         {
           id: 's1',
@@ -97,6 +109,19 @@ describe('derechos: acceso', () => {
     expect(records[0]).toMatchObject({ tabla: 'reservas', id: 's1', rut: '12345678-5' })
   })
 
+  it('access returns postulaciones too', async () => {
+    await insertReserva('s1', 'jose@correo.example')
+    await insertPostulacion('p1', 'jose@correo.example')
+    await insertPostulacion('p2', 'otra@correo.example')
+    const datos = await recolectar(env.DB, 'jose@correo.example')
+    expect(datos.postulaciones).toHaveLength(1)
+    expect(datos.postulaciones[0]).toMatchObject({ id: 'p1', comuna: 'Ñuñoa', experiencia_anios: 4 })
+
+    const entrega = await ejecutar(tarea({}), env as Env)
+    const { records } = (entrega.body as { result: { records: Record<string, unknown>[] } }).result
+    expect(records.map((r) => `${r.tabla}:${r.id}`)).toEqual(['reservas:s1', 'postulaciones:p1'])
+  })
+
   it('normalizes the email the way the forms store it', () => {
     expect(normalizarCorreo('  A@B.cl ')).toBe('a@b.cl')
     expect(normalizarCorreo('nope')).toBeNull()
@@ -112,15 +137,25 @@ describe('derechos: supresión', () => {
     const entrega = await ejecutar(tarea({ action: 'delete', node_key: 'lebrel_eliminar' }), env as Env)
     expect(entrega).toEqual({
       ruta: 'complete',
-      body: { result: { records: [] }, evidence: { borrados: { reservas: 2 }, terceros: { veterinaria: [] } } },
+      body: { result: { records: [] }, evidence: { borrados: { reservas: 2, postulaciones: 0 }, terceros: { veterinaria: [] } } },
     })
     expect(await count()).toBe(1)
+  })
+
+  it('delete removes postulaciones, with no third party', async () => {
+    await insertPostulacion('p1', 'jose@correo.example')
+    await insertPostulacion('p2', 'otra@correo.example')
+    const f = stubFetch(204)
+    const res = await borrar(env.DB, conVeterinaria, 'jose@correo.example', f.impl)
+    expect(res).toEqual({ ok: true, borrados: { reservas: 0, postulaciones: 1 }, terceros: { veterinaria: [] } })
+    expect(f.calls).toHaveLength(0)
+    expect(await countPost()).toBe(1)
   })
 
   it('is safe to repeat', async () => {
     await insertReserva('s1', 'jose@correo.example')
     await borrar(env.DB, env as Env, 'jose@correo.example')
-    expect((await borrar(env.DB, env as Env, 'jose@correo.example')).borrados).toEqual({ reservas: 0 })
+    expect((await borrar(env.DB, env as Env, 'jose@correo.example')).borrados).toEqual({ reservas: 0, postulaciones: 0 })
   })
 
   it('tells the vet only about the bookings it received', async () => {
@@ -129,7 +164,7 @@ describe('derechos: supresión', () => {
     const f = stubFetch(204)
 
     const res = await borrar(env.DB, conVeterinaria, 'jose@correo.example', f.impl)
-    expect(res).toEqual({ ok: true, borrados: { reservas: 2 }, terceros: { veterinaria: ['enviado'] } })
+    expect(res).toEqual({ ok: true, borrados: { reservas: 2, postulaciones: 0 }, terceros: { veterinaria: ['enviado'] } })
     expect(f.calls).toEqual([
       { url: 'https://api.veterinaria-los-aromos.example/v1/confirmaciones-vacunas/s1', method: 'DELETE' },
     ])
@@ -168,7 +203,7 @@ describe('derechos: supresión', () => {
     const f = stubFetch(204)
 
     const res = await borrar(env.DB, { ...env, VETERINARIA_API_KEY: undefined } as Env, 'jose@correo.example', f.impl)
-    expect(res).toEqual({ ok: false, borrados: { reservas: 0 }, terceros: { veterinaria: ['omitido'] } })
+    expect(res).toEqual({ ok: false, borrados: { reservas: 0, postulaciones: 0 }, terceros: { veterinaria: ['omitido'] } })
     expect(f.calls).toHaveLength(0)
     expect(await count()).toBe(2)
   })

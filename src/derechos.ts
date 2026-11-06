@@ -23,10 +23,11 @@ type Row = Record<string, unknown>
 export type Datos = {
   correo: string
   reservas: Row[]
+  postulaciones: Row[]
 }
 
 export type Supresion = {
-  borrados: { reservas: number }
+  borrados: { reservas: number; postulaciones: number }
   terceros: { veterinaria: string[] }
 }
 
@@ -49,7 +50,11 @@ export async function recolectar(db: D1Database, correo: string): Promise<Datos>
     .prepare('SELECT * FROM reservas WHERE correo = ? ORDER BY created_at')
     .bind(correo)
     .all<Row>()
-  return { correo, reservas: filas.results }
+  const postulaciones = await db
+    .prepare('SELECT * FROM postulaciones WHERE correo = ? ORDER BY created_at')
+    .bind(correo)
+    .all<Row>()
+  return { correo, reservas: filas.results, postulaciones: postulaciones.results }
 }
 
 // Primero avisa a la veterinaria y solo si confirma borra aquí. Si no confirma (falla, o falta su
@@ -72,11 +77,13 @@ export async function borrar(
       .map((s) => eliminarEnVeterinaria(String(s.id), env, fetchImpl)),
   )
   if (veterinaria.some((r) => r !== 'enviado')) {
-    return { ok: false, borrados: { reservas: 0 }, terceros: { veterinaria } }
+    return { ok: false, borrados: { reservas: 0, postulaciones: 0 }, terceros: { veterinaria } }
   }
 
   const res = await db.prepare('DELETE FROM reservas WHERE correo = ?').bind(correo).run()
-  const borrados = { reservas: res.meta.changes }
+  // Las postulaciones no se comparten con nadie: se borran aquí y listo.
+  const post = await db.prepare('DELETE FROM postulaciones WHERE correo = ?').bind(correo).run()
+  const borrados = { reservas: res.meta.changes, postulaciones: post.meta.changes }
   console.log(JSON.stringify({ evento: 'derechos.supresion', ...borrados }))
   return { ok: true, borrados, terceros: { veterinaria } }
 }
@@ -88,7 +95,10 @@ export async function ejecutar(t: Tarea, env: Env, fetchImpl: typeof fetch = fet
   if (t.action === 'collect') {
     const datos = await recolectar(env.DB, correo)
     // Privai copia los records tal cual al reporte del titular: uno por fila, con su tabla.
-    const records = datos.reservas.map((fila) => ({ tabla: 'reservas', ...fila }))
+    const records = [
+      ...datos.reservas.map((fila) => ({ tabla: 'reservas', ...fila })),
+      ...datos.postulaciones.map((fila) => ({ tabla: 'postulaciones', ...fila })),
+    ]
     return { ruta: 'complete', body: { result: { records } } }
   }
   if (t.action === 'delete') {

@@ -31,7 +31,7 @@
 <header class="hero" id="top">
   <nav>
     <a class="brand" href="#top">Lebrel</a>
-    <span class="links"><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a><a class="btn ghost priv" href="https://privacidad.lebrel.cl">Centro de privacidad</a></span>
+    <span class="links"><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#trabaja">Trabaja con nosotros</a><a href="#contacto">Contacto</a><a class="btn ghost priv" href="https://privacidad.lebrel.cl">Centro de privacidad</a></span>
   </nav>
   <div class="hero-copy">
     <span class="mono kicker">Peluquería y guardería canina · Ñuñoa</span>
@@ -121,6 +121,29 @@
     <div class="hp" aria-hidden="true"><label>No llenar<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
     <p class="full aviso">Usamos tus datos para agendar y prestar el servicio. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.</p>
     <div class="full actions"><button class="btn primary" type="submit">Reservar</button><p class="form-msg" role="status" aria-live="polite"></p></div>
+  </form>
+</section>
+
+<section id="trabaja" class="reservar trabaja">
+  <div class="reservar-intro">
+    <span class="mono kicker">Trabaja con nosotros</span>
+    <h2>Buscamos manos <em>que quieran a los perros.</em></h2>
+    <p class="intro">Cuéntanos quién eres y qué experiencia tienes como peluquero/a canino/a.</p>
+    <p class="nota">Si tu perfil calza, te contactaremos. Guardamos tu postulación solo para evaluarla.</p>
+  </div>
+  <form class="form-card" id="f-postulacion" method="post" action="/api/postulacion" novalidate>
+    <p class="group full mono">Tus datos</p>
+    <div><label for="p-nombre">Nombre y apellido</label><input id="p-nombre" name="nombre" required autocomplete="name" placeholder="Nombre Apellido"></div>
+    <div><label for="p-comuna">Comuna</label><input id="p-comuna" name="comuna" required placeholder="Ej.: Ñuñoa"></div>
+    <div><label for="p-correo">Correo</label><input id="p-correo" name="correo" type="email" required autocomplete="email" placeholder="nombre@correo.example"></div>
+    <div><label for="p-tel">Teléfono</label><input id="p-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+56 9 0000 0000"></div>
+
+    <p class="group full mono">Tu experiencia</p>
+    <div class="full"><label for="p-anios">Años de experiencia</label><input id="p-anios" name="experiencia_anios" type="text" inputmode="numeric" required placeholder="Ej.: 3"></div>
+    <div class="full"><label for="p-exp">Cuéntanos tu experiencia</label><textarea id="p-exp" name="experiencia" required maxlength="1000" rows="5" placeholder="Dónde has trabajado y con qué razas o servicios"></textarea></div>
+    <div class="hp" aria-hidden="true"><label>No llenar<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+    <p class="full aviso">Usamos tus datos solo para evaluar tu postulación. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.</p>
+    <div class="full actions"><button class="btn primary" type="submit">Postular</button><p class="form-msg" role="status" aria-live="polite"></p></div>
   </form>
 </section>
 

@@ -7,6 +7,8 @@
     rut: 'Revisa el RUT: el dígito verificador no calza.',
     vacunas: 'Para la guardería, las vacunas deben estar al día.',
     mayor_edad: 'Para reservar debes ser mayor de 18 años.',
+    largo: 'Este campo es demasiado largo.',
+    anios: 'Escribe un número de años entre 0 y 50.',
   }
   // Mismo algoritmo que src/lib/rut.ts.
   const rutOk = (v) => {
@@ -82,6 +84,15 @@
     if (f.retiro.value === 'si' && !f.direccion.value.trim()) return { el: f.direccion, text: MSG.falta }
     if (f.servicio.value === 'guarderia' && f.vacunas.value === 'no') return { el: f.vacunas, text: MSG.vacunas }
     if (!f.mayor_edad.checked) return { el: f.mayor_edad, text: MSG.mayor_edad }
+    return null
+  })
+  // Mismas reglas que parsePostulacion en src/activities/postulacion.ts.
+  wire(document.getElementById('f-postulacion'), (f) => {
+    for (const el of f.querySelectorAll('[required]')) if (!el.value.trim()) return { el, text: MSG.falta }
+    if (!correoOk(f.correo.value)) return { el: f.correo, text: MSG.correo }
+    const anios = f.experiencia_anios.value.trim()
+    if (!/^\d{1,2}$/.test(anios) || Number(anios) > 50) return { el: f.experiencia_anios, text: MSG.anios }
+    if ([...f.experiencia.value.trim()].length > 1000) return { el: f.experiencia, text: MSG.largo }
     return null
   })
 })();
