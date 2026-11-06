@@ -116,7 +116,7 @@
     <div><label for="r-fecha">Fecha</label><input id="r-fecha" name="fecha" type="date" required></div>
     <div><label for="r-vacunas">¿Vacunas al día?</label><select id="r-vacunas" name="vacunas" required><option value="" disabled selected>Elige una opción</option><option value="si">Sí</option><option value="no">No</option></select></div>
     <div><label for="r-retiro">¿Retiro a domicilio?</label><select id="r-retiro" name="retiro" required><option value="" disabled selected>Elige una opción</option><option value="si">Sí</option><option value="no">No</option></select></div>
-    <div class="full"><label for="r-dir">Dirección <span class="opt">(opcional)</span></label><input id="r-dir" name="direccion" autocomplete="street-address" placeholder="Calle, número y comuna" aria-describedby="r-dir-ayuda"><small class="hint" id="r-dir-ayuda">Solo si pides retiro a domicilio.</small></div>
+    <div class="full" id="r-dir-campo"><label for="r-dir">Dirección para el retiro</label><input id="r-dir" name="direccion" autocomplete="street-address" placeholder="Calle, número y comuna" aria-describedby="r-dir-ayuda"><small class="hint" id="r-dir-ayuda">Solo la pedimos si eliges retiro a domicilio.</small></div>
     <div class="full check"><input id="r-mayor" name="mayor_edad" type="checkbox" value="si"><label for="r-mayor">Declaro ser mayor de 18 años</label></div>
     <div class="hp" aria-hidden="true"><label>No llenar<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
     <p class="full aviso">Usamos tus datos para agendar y prestar el servicio. Más información en nuestro <a href="https://privacidad.lebrel.cl">Centro de privacidad</a>.</p>

@@ -1,4 +1,5 @@
 /* Lebrel · estilo "Ultravioleta": fondo lavanda pálido, tinta violeta y acento ciruela. Siempre claro. */
+[hidden]{display:none!important}
 :root{
   --void:#f2eff8; --deep:#e6e0f2; --panel:#fbf9fe; --bone:#211a3a; --mist:#5f5779;
   --signal:#6236c9; --gold:#9b3a6c;

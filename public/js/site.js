@@ -61,6 +61,20 @@
   fecha.min = iso(hoy)
   fecha.max = iso(new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 90))
 
+  // La dirección solo se pide con retiro a domicilio. Sin retiro se oculta y se vacía, para no enviarla.
+  // Sin JavaScript el campo queda visible y el servidor la descarta si no hay retiro.
+  const retiro = document.querySelector('#f-reserva [name=retiro]')
+  const campoDir = document.querySelector('#r-dir-campo')
+  const direccion = document.querySelector('#f-reserva [name=direccion]')
+  const syncRetiro = () => {
+    const conRetiro = retiro.value === 'si'
+    campoDir.hidden = !conRetiro
+    direccion.required = conRetiro
+    if (!conRetiro) direccion.value = ''
+  }
+  retiro.addEventListener('change', syncRetiro)
+  syncRetiro()
+
   wire(document.getElementById('f-reserva'), (f) => {
     for (const el of f.querySelectorAll('[required]')) if (!el.value.trim()) return { el, text: MSG.falta }
     if (!rutOk(f.rut.value)) return { el: f.rut, text: MSG.rut }
