@@ -66,7 +66,7 @@ describe('página', () => {
     expect(config('lebrel.cl').deploymentId).toBe('0c1691ab-13e5-453e-b365-641e012ecff1')
   })
 
-  it('las cookies no esenciales se crean al cargar la página, para que el escáner de Privai las detecte', async () => {
+  it('cada cookie no esencial queda bloqueada hasta que se acepta su categoría en el banner', async () => {
     const html = await get('/')
     const scripts = {
       analytics: '/js/analytics.js',
@@ -74,10 +74,11 @@ describe('página', () => {
       marketing: '/js/campanas.js',
     }
     for (const [categoria, src] of Object.entries(scripts)) {
-      // Se cargan como scripts normales; data-category queda marcado para cuando Privai las bloquee.
-      expect(html).toContain(`<script data-category="${categoria}" src="${src}" defer></script>`)
-      expect(html).not.toContain(`type="text/plain" data-category="${categoria}"`)
+      expect(html).toContain(`<script type="text/plain" data-category="${categoria}" src="${src}" defer></script>`)
+      expect(html).not.toContain(`<script data-category="${categoria}"`)
     }
+    // Ningún otro script de la página crea esas cookies.
+    expect(await get('/js/site.js')).not.toMatch(/lb_(vid|pref|campana)/)
   })
 
   it('preferencias y campañas crean su cookie sin esperar a que el visitante haga algo', async () => {
