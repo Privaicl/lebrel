@@ -65,4 +65,19 @@ describe('página', () => {
     }
     expect(config('lebrel.cl').deploymentId).toBe('0c1691ab-13e5-453e-b365-641e012ecff1')
   })
+
+  it('cada cookie no esencial se carga bloqueada hasta que se acepta su categoría', async () => {
+    const html = await get('/')
+    const bloqueados = {
+      analytics: '/js/analytics.js',
+      functional: '/js/preferencias.js',
+      marketing: '/js/campanas.js',
+    }
+    for (const [categoria, src] of Object.entries(bloqueados)) {
+      expect(html).toContain(`<script type="text/plain" data-category="${categoria}" src="${src}" defer></script>`)
+      expect(await get(src)).not.toBe('')
+    }
+    // Ningún otro script de la página crea esas cookies.
+    expect(await get('/js/site.js')).not.toMatch(/lb_(vid|pref|campana)/)
+  })
 })

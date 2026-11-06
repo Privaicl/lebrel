@@ -17,6 +17,11 @@ Cookies:
 
 - `lb_session`: esencial. Solo comprueba que el formulario sale de nuestra página.
 - `lb_vid`: no esencial, 13 meses. Solo se crea si la persona acepta "Analítica" en el banner de Privai.
+- `lb_pref`: no esencial ("functional"), 12 meses. Recuerda el último servicio elegido en la reserva. Solo vive en el navegador (`public/js/preferencias.js`).
+- `lb_campana`: no esencial ("marketing"), 90 días. Guarda la campaña (`utm_source`, `utm_campaign`) por la que llegó la persona. Solo vive en el navegador (`public/js/campanas.js`).
+
+Cada cookie no esencial la crea un script cargado como `type="text/plain" data-category="…"`: el banner de Privai
+lo activa solo si la persona acepta esa categoría.
 
 Los plazos se aplican con un cron diario, de madrugada (07:00 UTC), en `src/retention.ts`.
 La veterinaria solo recibe datos si su clave está configurada. En producción no lo está.
