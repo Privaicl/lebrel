@@ -63,6 +63,6 @@ describe('página', () => {
     for (const host of ['lebrel.privai-demo.workers.dev', 'localhost', 'notlebrel.cl']) {
       expect(config(host)).not.toHaveProperty('cookieDomain')
     }
-    expect(config('lebrel.cl').deploymentId).toBe('PENDIENTE_DEPLOYMENT_ID')
+    expect(config('lebrel.cl').deploymentId).toBe('0c1691ab-13e5-453e-b365-641e012ecff1')
   })
 })
