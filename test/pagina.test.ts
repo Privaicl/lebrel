@@ -66,18 +66,30 @@ describe('página', () => {
     expect(config('lebrel.cl').deploymentId).toBe('0c1691ab-13e5-453e-b365-641e012ecff1')
   })
 
-  it('cada cookie no esencial se carga bloqueada hasta que se acepta su categoría', async () => {
+  it('las cookies no esenciales se crean al cargar la página, para que el escáner de Privai las detecte', async () => {
     const html = await get('/')
-    const bloqueados = {
+    const scripts = {
       analytics: '/js/analytics.js',
       functional: '/js/preferencias.js',
       marketing: '/js/campanas.js',
     }
-    for (const [categoria, src] of Object.entries(bloqueados)) {
-      expect(html).toContain(`<script type="text/plain" data-category="${categoria}" src="${src}" defer></script>`)
-      expect(await get(src)).not.toBe('')
+    for (const [categoria, src] of Object.entries(scripts)) {
+      // Se cargan como scripts normales; data-category queda marcado para cuando Privai las bloquee.
+      expect(html).toContain(`<script data-category="${categoria}" src="${src}" defer></script>`)
+      expect(html).not.toContain(`type="text/plain" data-category="${categoria}"`)
     }
-    // Ningún otro script de la página crea esas cookies.
-    expect(await get('/js/site.js')).not.toMatch(/lb_(vid|pref|campana)/)
+  })
+
+  it('preferencias y campañas crean su cookie sin esperar a que el visitante haga algo', async () => {
+    const correr = async (src: string, search = '') => {
+      const doc = { cookie: '', querySelector: () => null }
+      new Function('document', 'location', await get(src))(doc, { protocol: 'https:', search })
+      return doc.cookie
+    }
+    expect(await correr('/js/preferencias.js')).toMatch(/^lb_pref=[^;]+; Max-Age=31536000; Path=\/; SameSite=Lax; Secure$/)
+    expect(await correr('/js/campanas.js')).toMatch(/^lb_campana=directo; Max-Age=7776000;/)
+    expect(await correr('/js/campanas.js', '?utm_source=instagram&utm_campaign=verano')).toMatch(
+      /^lb_campana=instagram%7Cverano;/,
+    )
   })
 })

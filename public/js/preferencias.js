@@ -4,14 +4,18 @@
 (() => {
   const NAME = 'lb_pref'
   const MAX_AGE = 31536000 // 365 días
-  const select = document.querySelector('#f-reserva select[name="servicio"]')
-  if (!select) return
+  const secure = location.protocol === 'https:' ? '; Secure' : ''
+  const guardar = (valor) => {
+    document.cookie = `${NAME}=${encodeURIComponent(valor)}; Max-Age=${MAX_AGE}; Path=/; SameSite=Lax${secure}`
+  }
   const found = document.cookie.split('; ').find((c) => c.startsWith(`${NAME}=`))
   const guardado = found ? decodeURIComponent(found.slice(NAME.length + 1)) : ''
+  if (!found) guardar('ninguno')
+
+  const select = document.querySelector('#f-reserva select[name="servicio"]')
+  if (!select) return
   if (guardado && !select.value && [...select.options].some((o) => o.value === guardado)) select.value = guardado
   select.addEventListener('change', () => {
-    if (!select.value) return
-    const secure = location.protocol === 'https:' ? '; Secure' : ''
-    document.cookie = `${NAME}=${encodeURIComponent(select.value)}; Max-Age=${MAX_AGE}; Path=/; SameSite=Lax${secure}`
+    if (select.value) guardar(select.value)
   })
 })()
