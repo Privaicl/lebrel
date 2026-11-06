@@ -81,6 +81,43 @@ describe('página', () => {
     expect(await get('/js/site.js')).not.toMatch(/lb_(vid|pref|campana)/)
   })
 
+  it('la dirección solo aparece, y es obligatoria, si se pide retiro a domicilio', async () => {
+    const html = await get('/')
+    expect(html).toContain('<div class="full" id="r-dir-campo">')
+    expect(html).not.toMatch(/Dirección <span class="opt">\(opcional\)<\/span>/)
+
+    // Corre site.js con un DOM mínimo y cambia el retiro.
+    const el = () => ({ value: '', hidden: false, required: false, min: '', max: '', listeners: {} as Record<string, () => void>,
+      addEventListener(tipo: string, fn: () => void) { this.listeners[tipo] = fn } })
+    const retiro = el()
+    const campo = el()
+    const direccion = el()
+    direccion.value = 'Av. Siempre Viva 742'
+    const porSelector: Record<string, unknown> = {
+      '#f-reserva [name=retiro]': retiro,
+      '#r-dir-campo': campo,
+      '#f-reserva [name=direccion]': direccion,
+    }
+    const document = { querySelector: (s: string) => porSelector[s] ?? el(), getElementById: () => el() }
+    new Function('document', await get('/js/site.js'))(document)
+
+    expect(campo.hidden).toBe(true)
+    expect(direccion.required).toBe(false)
+    expect(direccion.value).toBe('')
+
+    retiro.value = 'si'
+    retiro.listeners.change()
+    expect(campo.hidden).toBe(false)
+    expect(direccion.required).toBe(true)
+
+    direccion.value = 'Av. Siempre Viva 742'
+    retiro.value = 'no'
+    retiro.listeners.change()
+    expect(campo.hidden).toBe(true)
+    expect(direccion.required).toBe(false)
+    expect(direccion.value).toBe('')
+  })
+
   it('preferencias y campañas crean su cookie sin esperar a que el visitante haga algo', async () => {
     const correr = async (src: string, search = '') => {
       const doc = { cookie: '', querySelector: () => null }
