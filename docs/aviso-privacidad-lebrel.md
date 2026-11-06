@@ -32,6 +32,10 @@ Las personas cuyos datos tratamos son: los clientes que envían una Reserva de h
 
 **Analítica del sitio (`lb_vid`, no esencial):** Solo si usted acepta la categoría "Analítica" en el banner de cookies, creamos un identificador aleatorio del visitante y registramos, una vez por cada carga de página, la página y la sección en la que llega (por ejemplo, `#servicios`), el sitio desde el que llegó y el navegador que usa. No registramos las secciones que recorre después, ni su nombre, correo o dirección IP, y no cruzamos estas visitas con las Reservas de hora. Si no acepta, el código de analítica no se carga.
 
+**Preferencias (`lb_pref`, no esencial):** Solo si usted acepta la categoría "Funcionales" en el banner de cookies, recordamos en su navegador el último servicio que eligió en el formulario de reserva, para dejarlo seleccionado en su próxima visita. Este dato no se envía a nuestros servidores.
+
+**Campañas (`lb_campana`, no esencial):** Solo si usted acepta la categoría "Marketing" en el banner de cookies y llega a lebrel.cl desde un enlace de una campaña nuestra, guardamos en su navegador el nombre de esa campaña y de dónde vino (por ejemplo, "instagram"), para medir qué publicidad funciona. Este dato no se envía a nuestros servidores ni a terceros.
+
 **Registro de consentimiento de cookies:** El banner de cookies, provisto por Privai, guarda un registro de su decisión: un identificador aleatorio del visitante, el navegador, la fecha y las categorías aceptadas o rechazadas. No incluye nombre, correo ni dirección IP.
 
 **Registros técnicos:** Nuestro proveedor de infraestructura (Cloudflare) registra eventos de operación del sitio, como errores y el resultado de los envíos a la veterinaria. Estos registros usan el identificador interno de la reserva y no incluyen su nombre, RUT ni correo.
@@ -67,7 +71,7 @@ Solo le enviamos el Boletín de novedades y promociones de Lebrel si usted lo co
 
 **Ejercicio o defensa de derechos (Art. 13 e):** la conservación de evidencia necesaria para atender reclamos ante tribunales u órganos públicos.
 
-**Consentimiento (Art. 12):** la analítica del sitio (`lb_vid`) y el Boletín de novedades y promociones de Lebrel. Puede retirarlo en cualquier momento desde el banner de cookies o el Centro de Privacidad.
+**Consentimiento (Art. 12):** la analítica del sitio (`lb_vid`), las cookies de preferencias (`lb_pref`) y de campañas (`lb_campana`) y el Boletín de novedades y promociones de Lebrel. Puede retirarlo en cualquier momento desde el banner de cookies o el Centro de Privacidad.
 
 ## 3. Divulgación de Datos Personales
 
@@ -105,7 +109,7 @@ Conforme a la Ley 21.719, usted tiene los siguientes derechos respecto de sus da
 
 ### Revocación del consentimiento
 
-Puede revocar en cualquier momento y sin expresión de causa su consentimiento para la analítica del sitio, desde el banner de cookies (enlace "Configurar cookies"), o para el Boletín de novedades y promociones de Lebrel, desde el Centro de Privacidad (Art. 12). Al revocar la analítica dejamos de cargar el código que registra visitas; también puede borrar la cookie `lb_vid` desde su navegador. La revocación no tiene efectos retroactivos.
+Puede revocar en cualquier momento y sin expresión de causa su consentimiento para la analítica del sitio y para las cookies de preferencias y de campañas, desde el banner de cookies (enlace "Configurar cookies"), o para el Boletín de novedades y promociones de Lebrel, desde el Centro de Privacidad (Art. 12). Al revocar una categoría dejamos de cargar el código que crea esa cookie; también puede borrar las cookies `lb_vid`, `lb_pref` y `lb_campana` desde su navegador. La revocación no tiene efectos retroactivos.
 
 ### Cómo ejercer sus derechos
 
@@ -156,6 +160,8 @@ Peluquería Canina Lebrel SpA conserva sus datos personales durante el tiempo ne
 **Reservas de hora:** 24 meses desde el envío, o antes si usted pide la supresión. Las usamos para agendar y prestar el servicio que reservó.
 
 **Visitas de la analítica del sitio:** 13 meses desde cada visita. Sirven para las estadísticas de uso; la cookie `lb_vid` también expira a los 13 meses.
+
+**Cookies de preferencias (`lb_pref`) y de campañas (`lb_campana`):** 12 meses y 90 días, respectivamente, en su navegador. No las guardamos en nuestros servidores.
 
 **Cookie de sesión `lb_session`:** hasta que cierre el navegador; no se guarda en nuestros servidores. Sirve para proteger los formularios.
 
